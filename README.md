@@ -1,10 +1,8 @@
 # Literature RAG
 
-Local retrieval-augmented generation for your book library
+> Local retrieval-augmented generation for your book library
 
-Add or remove `.epub` books and let MCP automatically index book and update topic keywords, so you can ask questions to book or books
-
---
+> Add or remove `.epub` books and let MCP automatically index book and update topic keywords, so you can ask questions to book or books
 
 ## What it does
 
@@ -13,8 +11,6 @@ Add or remove `.epub` books and let MCP automatically index book and update topi
 3. **Allows fast queries** with citations, markdown links, sources and text snippets
 4. **Integrates with VS Code (Copilot MCP)** for direct queries in the editor
 5. **Tracks costs and usage** for book queries and embeddings prices (if any)
-
----
 
 ## Requirements
 
@@ -29,8 +25,6 @@ Add or remove `.epub` books and let MCP automatically index book and update topi
 - [Hammerspoon](https://www.hammerspoon.org/): configure the `literature_rag.lua` script to watch the `books/` folder for changes
 - Gemini API key: kept in `.env`
 
----
-
 ## Usage
 
 Always start with [`/literature`](./.github/prompts/literature.prompt.md) prompt so it turns MCP on and understands you want RAG context
@@ -41,8 +35,6 @@ Always start with [`/literature`](./.github/prompts/literature.prompt.md) prompt
 2. Hammerspoon (macOS) detects changes and triggers auto-indexing
 3. Keywords for each folder are updated automatically using Gemini
 4. `.rag-topics` files are created/updated for keyword management
-
----
 
 ## Architecture
 
@@ -73,15 +65,11 @@ graph TD
   v2 --> s1[Persist to storage]
 ```
 
----
-
 ## Security & Best Practices
 
 - All API keys are kept in `.env` and never exposed in config files or code.
 - Only the Gemini API key is required for embedding and LLM.
 - All code and data live in `~/Documents/literature` for privacy and portability.
-
----
 
 ## TODO
 
