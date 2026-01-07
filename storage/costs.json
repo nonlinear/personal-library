@@ -42,7 +42,14 @@
       "embedding_cost": 0.0,
       "embedding_tokens": 262083,
       "embedding_date": "2026-01-06T18:46:56.315401",
-      "queries": []
+      "queries": [
+        {
+          "date": "2026-01-07T16:21:54.524067",
+          "tokens": 92,
+          "cost": 0.0,
+          "month": "2026-01"
+        }
+      ]
     },
     "The Atlas of AI": {
       "embedding_cost": 0.0,
@@ -228,6 +235,11 @@
         "query_count": 3,
         "total_cost": 0.0,
         "total_tokens": 43
+      },
+      "AI and UX": {
+        "query_count": 1,
+        "total_cost": 0.0,
+        "total_tokens": 92
       }
     }
   }

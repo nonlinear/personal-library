@@ -17,34 +17,22 @@ Automated system for private, fast retrieval-augmented queries over your referen
 
 ## Requirements
 
-- **VS Code** (for editing and MCP integration)
-- **Python 3.11+** (recommended)
-- **llama-index** (RAG framework)
-- **ebooklib** (EPUB parsing)
-- **beautifulsoup4** (HTML parsing)
-- **google-generativeai** (Gemini API)
-- **watchdog** (file monitoring)
-- **Hammerspoon** (macOS, for auto-indexing)
-- **Gemini API key** (kept in `.env`)
-
----
-
-## Installation
-
-```bash
-git clone https://github.com/youruser/literature.git
-cd literature
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-# Copy .env.example to .env and add your GOOGLE_API_KEY
-```
-
-Install [Hammerspoon](https://www.hammerspoon.org/) and configure the `literature_rag.lua` script to watch the `books/` folder for changes. All code and data live in `~/Documents/literature`.
+- VS Code: for editing and MCP integration
+- Python 3.11+: recommended
+- llama-index: RAG framework
+- ebooklib: EPUB parsing
+- beautifulsoup4: HTML parsing
+- google-generativeai: Gemini API
+- watchdog: file monitoring
+- an LLM
+- [Hammerspoon](https://www.hammerspoon.org/): configure the `literature_rag.lua` script to watch the `books/` folder for changes
+- Gemini API key: kept in `.env`
 
 ---
 
 ## Usage
+
+Always start with `[/literature](./.github/prompts/literature.prompt.md)` prompt so it turns MCP on and understands you want RAG context
 
 ### Adding or removing books
 
@@ -111,55 +99,8 @@ graph TD
 
 ## TODO
 
-- [x] ~~Implement `test_gemini_rag.py` with EpubReader~~
-- [x] ~~Test indexing: 2 EPUBs (Seeing Like a State, How Forests Think)~~
-- [x] ~~Persist in JSON (docstore.json + default\_\_vector_store.json)~~
-- [x] ~~Persist in JSON (docstore.json + default\_\_vector_store.json)~~
+### 🌀 UX Feedback Loop
 
-### ✅ Phase 2: Queries & CLI
-
-- [x] ~~CLI query_book.py with book name + question~~
-- [x] ~~Answers with source citations (snippets + relevance scores)~~
-- [x] ~~Test: "What is legibility?", "How do societies evade legibility?"~~
-- [x] ~~Validate retrieval working, "How do societies evade legibility?"~~
-- [x] ~~Validate retrieval working~~
-
-### ✅ Phase 3: Organização Temática com Keywords
-
-- [x] ~~Folder structure: `urbanism/`, `anthropocene/`~~
-- [x] ~~Format `.rag-topics` (robots.txt style)~~
-- [x] ~~Manual keywords: `legibility, state, urban planning...`~~
-- [x] ~~Auto-detection: question → match keywords → search in the correct folder~~
-- [x] ~~Automatic keywords: Gemini LLM extracts when indexing the correct folder~~
-- [x] ~~Automatic keywords: Gemini LLM extracts when indexing~~
-
-### ✅ Phase 4: Auto-Indexing Completo
-
-- [x] ~~`literature_watchdog.py`: monitors files + extracts keywords + updates `.rag-topics`~~
-- [x] ~~`literature_rag.lua`: Hammerspoon with macOS notifications + updates `.rag-topics`~~
-- [x] ~~Test: add EPUB → auto-index with keywords~~
-- [x] ~~Test: remove EPUB → clean from index with keywords~~
-- [x] ~~Validate: keywords appear in `.rag-topics` automatically~~
-- [x] ~~Tools: query_literature, list_books, get_literature_costs~~
-- [ ] **Test: reload VS Code + ask directly in Copilot**
-- [ ] **Validate: sources with markdown links working**
-
-### ⏳ Phase 6: VS Code Copilot Integration (MCP)
-
-- [x] ~~MCP server implemented (literature_mcp_server.py)~~
-- [x] ~~Configured in `~/Library/.../mcp.json`~~
-- [x] ~~Tools: query_literature, list_books, get_literature_costs~~
-- [ ] **Test: reload VS Code + ask directly in Copilot**
-- [ ] **Validate: sources with markdown links working**
-
-### 🔮 Next steps
-
-- [ ] PDF support (besides EPUB)
-- [ ] EPUB metadata (author, year) in answers
-- [ ] Automatic cross-book queries (search in multiple folders)
-- [ ] OpenAI fallback if Gemini fails
-- [x] ~~Prompt `literature_use.prompt.md` to facilitate queries~~
-
-```
-
-```
+- [ ] Discuss and design a better feedback loop for literature queries
+- [ ] Reduce friction in user interactions and query approval
+- [ ] Suggestion: MCP should only activate when `literature.prompt.md` is present, and always route literature questions through MCP for consistent, source-based answers
