@@ -1,0 +1,3 @@
+# Ignora todos os arquivos dentro de books/, mas mantém o diretório
+books/*
+!books/.gitkeep
