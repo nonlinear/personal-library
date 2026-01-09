@@ -2,6 +2,8 @@
 
 > Local retrieval-augmented generation for your book library
 
+> 🚧 Under construction: [contact nicholas](sgnl://signal.me/#p/+19175121486) (signal) for updates
+
 ## Asking a question
 
 Always start with [`/literature`](./.github/prompts/literature.prompt.md) prompt so it turns MCP on and understands you want RAG context
