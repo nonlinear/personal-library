@@ -2,7 +2,7 @@
 
 > Local retrieval-augmented generation for your book library
 
-> 🚧 Under construction: [contact nicholas](sgnl://signal.me/#p/+19175121486) (signal) for updates
+> 🚧 Under construction
 
 ## Asking a question
 
