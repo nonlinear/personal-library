@@ -41,6 +41,12 @@
           "tokens": 74,
           "cost": 0.0,
           "month": "2026-01"
+        },
+        {
+          "date": "2026-01-08T21:47:23.050988",
+          "tokens": 33,
+          "cost": 0.0,
+          "month": "2026-01"
         }
       ]
     },
@@ -204,7 +210,20 @@
       "embedding_cost": 0.0,
       "embedding_tokens": 539652,
       "embedding_date": "2026-01-08T21:09:51.036456",
-      "queries": []
+      "queries": [
+        {
+          "date": "2026-01-08T21:34:16.281495",
+          "tokens": 48,
+          "cost": 0.0,
+          "month": "2026-01"
+        },
+        {
+          "date": "2026-01-08T21:37:19.228528",
+          "tokens": 48,
+          "cost": 0.0,
+          "month": "2026-01"
+        }
+      ]
     }
   },
   "monthly": {
@@ -215,9 +234,14 @@
         "total_tokens": 49
       },
       "Foundations of Computer Vision": {
+        "query_count": 3,
+        "total_cost": 0.0,
+        "total_tokens": 181
+      },
+      "Molecular Red": {
         "query_count": 2,
         "total_cost": 0.0,
-        "total_tokens": 148
+        "total_tokens": 96
       }
     }
   }

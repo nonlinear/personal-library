@@ -38,8 +38,30 @@ Settings.embed_model = embed_model
 Settings.llm = llm
 
 # Load index
-storage_context = StorageContext.from_defaults(persist_dir=str(STORAGE_DIR))
-index = load_index_from_storage(storage_context)
+
+from llama_index.readers.file import EpubReader
+
+from llama_index.core import VectorStoreIndex
+
+docs = []
+errored_epubs = []
+for folder in BOOKS_DIR.iterdir():
+    if not folder.is_dir() or folder.name.startswith('.'):
+        continue
+    for item in folder.iterdir():
+        if item.suffix == '.epub' and item.is_file():
+            reader = EpubReader()
+            try:
+                docs.extend(reader.load_data(str(item)))
+            except Exception as e:
+                errored_epubs.append((str(item), str(e)))
+
+if errored_epubs:
+    print("[WARNING] The following .epub files could not be loaded:")
+    for fname, err in errored_epubs:
+        print(f"  {fname}: {err}")
+
+index = VectorStoreIndex(docs)
 query_engine = index.as_query_engine()
 
 # Initialize cost tracker

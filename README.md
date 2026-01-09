@@ -12,37 +12,38 @@ Minimal, manual workflow for local book retrieval and question-answering.
 
 No watcher, no Hammerspoon, no file monitoring. All updates are manual and reliable.
 
-## Requirements
+## Roadmap
 
-- Python 3.11+
-- llama-index
-- ebooklib
-- beautifulsoup4
-- google-generativeai (Gemini API)
-- pymupdf (for PDF support)
-- Gemini API key in `.env`
+1. Embed books via [update literature](scripts/update_literature.py) ✅
+2. Turn on literature MCP (via tasks) ✅
+3. Query via [literature prompt](.github/prompts/literature.prompt.md) ✅
+4. Turn off literature MCP (via tasks) ✅
+5. Local embedding model (vs gemini) ⏳
+6. Better query (terminal on bg? extension?) ⏳
+7. threading/multiprocessing for simultaneous queries and implement cache for recent responses. ⏳
+8. literature prompt asking for topic or book for faster response ⏳
+9. turn MCP on/off automatically (how?) ⏳
+10. PDF support ⏳
+11. generalize: path on .env, etc. new computers) ⏳
+12. image support (source points to file with image) ⏳
 
-## Usage
+## 🤖 For AI
 
-1. Add or remove `.epub` or `.pdf` files in `books/`.
-2. Run:
+Always use `/opt/homebrew/bin/python3.11` (Homebrew's Python 3.11) to run scripts and install packages.
+Never use venv or virtual environments; always install globally.
 
-   ```sh
-   /opt/homebrew/bin/python3.11 scripts/update_literature.py
-   ```
+Install dependencies with:
 
-   Only new books will be indexed. To force a full rebuild, run:
+```sh
+/opt/homebrew/bin/python3.11 -m pip install <package>
+```
 
-   ```sh
-   /opt/homebrew/bin/python3.11 scripts/reindex_all_books.py
-   ```
+Run scripts with:
 
-3. Use the literature prompt to query your books.
+```sh
+/opt/homebrew/bin/python3.11 script.py
+```
 
-## Prompts
-
-- **update_literature**: Index new books and update topics. Reports new books and total cost.
-- **reindex_all_books**: Rebuild the entire index from scratch.
-- **literature**: Query your indexed books.
-
----
+Never use `python3`, `python`, `pip`, or `pip3` without the full path.
+Review this notice before running any script or installing dependencies.
+Update this list with new findings as needed.

@@ -22,21 +22,22 @@ When this prompt is activated:
 
 3. **Consult the RAG system:**
 
-   - Use the MCP literature tools to query relevant books
-   - Focus on the specified folder OR folders whose topics match the question
-   - Retrieve relevant passages and citations
+   - Use as ferramentas MCP para consultar os livros relevantes
+   - Foque na pasta especificada OU nas pastas cujos tópicos correspondem à pergunta
+   - Recupere trechos e citações relevantes
 
 4. **Provide answer with sources:**
 
-   - When mentioning an answer that has a source, add a superscript reference at the end of the sentence or term, like ^1, ^2, ^3.
-   - At the end, list sources in this format (ensure links use markdown syntax and are not inside code blocks):
+   - When mentioning an answer that has a source, add a reference in parentheses at the end of the sentence or term, like (1), (2), (3).
+
+   - At the end, list sources as a numbered list, each with the file:// link and a 5-word string to search, like this:
 
 📚 Sources:
 
-- 1️⃣ [Book Name](/Users/nfrota/Documents/literature/books/folder/book.epub): "some 30-character string from the book so you can find it"
-- 2️⃣ [Another Book](/Users/nfrota/Documents/literature/books/folder/book.epub): "another 30-character string from the book"
+1. file:///Users/nfrota/Documents/literature/books/folder/book.epub "five sequential words here"
+2. file:///Users/nfrota/Documents/literature/books/folder/another_book.epub "another five word example"
 
-5. **If no relevant books found:**
+3. **If no relevant books found:**
 
 - Explain which topics you searched
 - List available folders and their topics
@@ -93,5 +94,5 @@ cat ~/Documents/literature/books/AI/.rag-topics
 - Mention topics explicitly (e.g., "according to I Ching")
 - Ask conceptual questions rather than generic ones
 - "What is legibility?" → urbanism/
-**Examples that might NOT trigger:**
+  **Examples that might NOT trigger:**
 - "How are you today?" (social, not knowledge-based)
