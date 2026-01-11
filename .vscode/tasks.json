@@ -1,0 +1,64 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Literature MCP Server",
+      "type": "shell",
+      "command": "zsh",
+      "args": [
+        "./.vscode/start_literature_mcp.sh"
+      ],
+      "options": {
+        "cwd": "/Users/nfrota/Documents/notes"
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      // "runOptions": {
+      //   "runOn": "folderOpen"
+      // }
+    },
+    {
+      "label": "Stop Literature MCP Server",
+      "type": "shell",
+      "command": "pkill -f literature_mcp_server.py",
+      "options": {
+        "cwd": "/Users/nfrota/Documents/notes"
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "🔄 Sync settings",
+      "type": "shell",
+      "command": "/opt/homebrew/bin/python3.11 .github/scripts/Sync_settings.py",
+      "group": "build"
+    },
+    {
+      "label": "🔌 Media SSH",
+      "type": "shell",
+      "command": "ssh -t nonlinear@192.168.1.152 'cd /serve/media/; exec bash'",
+      "group": "build",
+      "presentation": {
+        "panel": "new"
+      }
+    },
+    {
+      "label": "🔄 Sync comics",
+      "type": "shell",
+      "command": "python3 .github/scripts/sync_comics.py",
+      "group": "build"
+    },
+    {
+      "label": "🔄  Commit literature changes",
+      "type": "shell",
+      "command": "cd /Users/nfrota/Documents/literature && git add -A && echo 'Enter commit message:' && read msg && git commit -m \"$msg\" && git pull && git push",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    }
+  ]
+}
