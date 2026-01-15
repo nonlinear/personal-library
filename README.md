@@ -36,33 +36,6 @@ books/
 - Each folder = 1 topic
 - Only EPUBs and PDFs inside
 
-### Technology Stack
-
-| Component     | Choice                 | Why                             |
-| ------------- | ---------------------- | ------------------------------- |
-| Engine        | Python 3.11            | Homebrew-managed, local control |
-| RAG Framework | LlamaIndex             | Efficient indexing & retrieval  |
-| Embeddings    | Gemini `embedding-001` | Fast API, 768-dim, free tier    |
-| Vector Store  | LlamaIndex (native)    | No manual FAISS management      |
-| File Watching | `watchdog`             | Delta detection                 |
-| Metadata      | Single `metadata.json` | Fast navigation map             |
-
-**Embedding Benchmark (M3 MacBook Pro):**
-
-| Model                      | Startup | Query Latency | Quality   | Cost      |
-| -------------------------- | ------- | ------------- | --------- | --------- |
-| **Gemini embedding-001**✅ | <0.5s   | ~700ms        | Excellent | Free tier |
-| all-MiniLM-L6-v2 (local)   | ~4s     | ~500ms        | Good      | $0        |
-
-**Why Gemini?**
-
-1. **Instant startup**: No 4s model loading
-2. **Better embeddings**: 768-dim vs 384-dim
-3. **Free tier**: Generous API limits
-4. **Simpler**: LlamaIndex handles vector store
-
----
-
 ## The Map: `metadata.json`
 
 **Purpose:** Minimal abstraction for rapid AI decision-making.
@@ -73,31 +46,6 @@ books/
 - A search index
 - A documentation system
 
-**Analogy:** Subway map, not geographic map.
-
-### Structure
-
-```json
-{
-  "topics": [
-    {
-      "id": "fitness",
-      "label": "Fitness & Training",
-      "description": "Physical training, strength, conditioning",
-      "books": [
-        {
-          "id": "starting_strength",
-          "title": "Starting Strength",
-          "author": "Mark Rippetoe",
-          "year": 2011,
-          "tags": ["barbell", "strength", "programming"]
-        }
-      ]
-    }
-  ]
-}
-```
-
 **Design decisions:**
 
 - Tags exist only on books (semantic signal)
@@ -107,117 +55,29 @@ books/
 
 ---
 
-## System Pseudocode
-
-### 1. MCP Initialization
-
 ```mermaid
 graph TD
-  START[Start MCP] --> VAULT[Set VAULT_PATH]
-  VAULT --> META[Load metadata.json]
-  META --> EMB[Initialize Gemini API]
-  EMB --> VEC[Load LlamaIndex vector store]
-  VEC --> WATCH[Start file watcher]
-  WATCH --> WAIT[Wait for invocation]
+    QUERY([research prompt+<br>specific book query]) --> MAP[Read metadata.json]
+    MAP --> SIM[Semantic Similarity]
 
-  style WAIT fill:#90EE90
-  style START fill:#87CEEB
-```
+    SIM --> T1[Topic: philosophy<br/>Score: 0.89]
+    SIM --> T2[Topic: AI<br/>Score: 0.32]
 
-**Rule:** MCP is passive. Nothing happens until explicitly called.
+    T1 --> B1[Book: Psychopolitics<br/>Tags: power, discipline<br/>Score: 0.91]
 
----
+    B1 --> DECISION1{Confident match?}
+    T2 --> DECISION2{Confident match?}
 
-### 2. File Watching (Delta-Based)
+    DECISION1 -->|Yes| VEC[Query Vector Store<br/>Scope: philosophy/Psychopolitics]
+    DECISION2 -->|No| ASK[System asks for clarification]
 
-```mermaid
-graph TD
-  EVENT[File event detected] --> TYPE{Event type?}
+    ASK --> CLARIFY[Clarification query]
+    CLARIFY --> MAP
 
-  TYPE -->|Added| PARSE[Parse document]
-  PARSE --> CHUNK[Split into chunks]
-  CHUNK --> GEN[Generate embeddings]
-  GEN --> ADD[Add to LlamaIndex]
-  ADD --> UPDATE1[Update metadata.json]
-
-  TYPE -->|Removed| REMOVE[Remove from LlamaIndex]
-  REMOVE --> UPDATE2[Update metadata.json]
-
-  UPDATE1 --> SAVE[Persist vector store + metadata]
-  UPDATE2 --> SAVE
-  SAVE --> WAIT[Wait for next event]
-
-  style SAVE fill:#FFD700
+    VEC --> ANSWER([Precise answer from<br>relevant book chunks])
 ```
 
 **Rule:** Never reindex everything. Only delta changes.
-
----
-
-### 3. Query Flow
-
-```mermaid
-graph TD
-  CALL[MCP explicitly invoked] --> RECEIVE[Receive user query]
-  RECEIVE --> READ[Read metadata.json ONLY]
-
-  READ --> MATCH[Calculate semantic similarity:<br/>query vs topics/tags]
-
-  MATCH --> SELECT[Select best topic + books]
-
-  SELECT --> CONF{Confident<br/>match?}
-
-  CONF -->|No| CLARIFY[Ask user for clarification]
-  CLARIFY --> STOP[Stop]
-
-  CONF -->|Yes| CONSTRAIN[Build constrained query<br/>for selected scope]
-
-  CONSTRAIN --> SEARCH[Search vector index<br/>top_k chunks only]
-
-  SEARCH --> RETRIEVE[Retrieve minimal context]
-
-  RETRIEVE --> LLM[Send chunks + query to LLM]
-
-  LLM --> ANSWER[Generate answer]
-
-  ANSWER --> RETURN[Return to caller]
-
-  style READ fill:#FFB6C1
-  style SEARCH fill:#87CEEB
-  style CLARIFY fill:#FF6347
-  style RETURN fill:#90EE90
-```
-
----
-
-### 4. Navigation Logic (Map ≠ Territory)
-
-```mermaid
-graph LR
-  Q[User Query:<br/>'Compare Foucault<br/>and Han on discipline'] --> MAP[Read metadata.json]
-
-  MAP --> SIM[Semantic similarity]
-
-  SIM --> T1[Topic: philosophy<br/>Score: 0.89]
-  SIM --> T2[Topic: AI<br/>Score: 0.32]
-
-  T1 --> B1[Book: Psychopolitics<br/>Tags: power, discipline<br/>Score: 0.91]
-
-  B1 --> DECISION{Confident?}
-
-  DECISION -->|Yes| VEC[Query LlamaIndex<br/>scope: philosophy/Psychopolitics]
-  DECISION -->|No| ASK[Ask user]
-
-  VEC --> RAG[RAG retrieval]
-
-  style MAP fill:#FFD700
-  style VEC fill:#87CEEB
-  style ASK fill:#FF6347
-```
-
-**Key insight:** The map guides navigation. Territory is only accessed after direction is clear.
-
----
 
 ## Query Flow Principles
 
@@ -261,37 +121,20 @@ graph LR
 
 Before installation, you need:
 
-**1. Python 3.11 or higher**
+1. Python 3.11 or higher
 
-| Platform      | Installation                                                  |
-| ------------- | ------------------------------------------------------------- |
-| macOS         | `brew install python@3.11`                                    |
-| Ubuntu/Debian | `sudo apt install python3.11`                                 |
-| Windows       | [Download from python.org](https://www.python.org/downloads/) |
+- macOS`brew install python@3.11`
+- Ubuntu/Debian `sudo apt install python3.11`
+- Windows [Download from python.org](https://www.python.org/downloads/)
+- Verify: `python3.11 --version`
 
-Verify: `python3.11 --version`
+## Setup
 
-**2. Google Gemini API Key**
-
-1. Get free API key: https://aistudio.google.com/app/apikey
-2. Copy `.env-template` to `.env`:
-   ```bash
-   cp .env-template .env
-   ```
-3. Edit `.env` and add your key:
-   ```bash
-   GOOGLE_API_KEY=AIzaSy...your_actual_key_here
-   ```
-
-⚠️ **Never commit `.env` to git** (already in `.gitignore`)
-
-**3. Run setup script**
-
-```bash
-./scripts/setup.sh
-```
-
-This installs all Python dependencies automatically.
+3. Rename `.env-template` as `.env`
+4. [Get Google Gemini API Key](https://aistudio.google.com/app/apikey)
+5. Add your key to `.env`
+   - ⚠️ Maske sure `.env` is in `.gitignore`
+6. Run setup script: `bash ./scripts/setup.sh` (installs all Python dependencies automatically)
 
 **Manual setup (if needed):**
 
@@ -299,54 +142,18 @@ This installs all Python dependencies automatically.
 python3.11 -m pip install -r requirements.txt
 ```
 
----
+## Usage
 
-### Usage
+1. Add your books
 
-1. **Add your books**
+- `books/TOPICNAME/(epub files)
 
-   ```bash
-   mkdir -p books/topic-name
-   # Copy EPUB/PDF files to books/topic-name/
-   ```
+2. Generate metadata: `bash python3.11 scripts/generate_metadata.py`
+3. Build index: `bash python3.11 scripts/indexer.py` (soon: folder watch)
 
-2. **Generate metadata**
+- Creates vector store in `storage/` (~92MB for 25 books)
 
-   ```bash
-   python3.11 scripts/generate_metadata.py
-   ```
-
-3. **Build index**
-
-   ```bash
-   python3.11 scripts/indexer.py
-   ```
-
-   Creates vector store in `storage/` (~92MB for 25 books)
-
-4. **Query your library**
-
-   ```bash
-   python3.11 scripts/query.py "what books discuss AI ethics?"
-   ```
-
----
-
-## Dependencies
-
-All installed via `requirements.txt`:
-
-- `llama-index-core>=0.13.0` - RAG framework
-- `llama-index-embeddings-google-genai>=0.1.0` - Gemini embeddings
-- `llama-index-llms-gemini>=0.6.0` - Gemini LLM integration
-- `llama-index-readers-file>=0.1.0` - EPUB/PDF parsing
-- `keybert>=0.8.0` - Semantic tag extraction
-- `ebooklib>=0.18` + `beautifulsoup4>=4.12.0` - EPUB parsing
-- `python-dotenv>=1.0.0` - Environment variables
-- `google-generativeai>=0.3.0` - Google AI SDK
-- `watchdog>=3.0.0` - File system monitoring
-
----
+4. Test query your library: `bash python3.11 scripts/query.py "what books discuss AI ethics?"`
 
 ## What This System Is Not
 
@@ -360,26 +167,6 @@ All installed via `requirements.txt`:
 - ✅ A navigation layer for your books
 - ✅ A semantic index with minimal latency
 - ✅ A local-first, privacy-preserving tool
-
----
-
-## Development Notes
-
-Required `.env` file for Gemini API:
-
-```bash
-# Copy template
-cp .env-template .env
-
-# Edit and add your key
-nano .env
-```
-
-Contents:
-
-```bash
-GOOGLE_API_KEY=your_actual_key_here
----
 
 ## Roadmap
 
@@ -413,34 +200,3 @@ GOOGLE_API_KEY=your_actual_key_here
 - [ ] Terminal client (standalone)
 - [ ] API documentation
 - [ ] Performance benchmarks
-
----
-
-## For AI Agents
-
-When working on this codebase:
-
-1. **Read `metadata.json` first** before any RAG query
-2. **Never explore the vault** without explicit instruction
-3. **Use Homebrew Python 3.11** for all operations
-4. **Respect the map-territory distinction**
-5. **Optimize for latency** over comprehensiveness
-6. **Check roadmap on session start**: Read this README's Roadmap section and announce the next `- [ ] **NEXT:**` item as the suggested task
-
-This is a navigation system, not a knowledge base.
-
----
-
-## Project Status (Last Updated: 2026-01-15)
-
-**Current State:**
-- ✅ Phase 1 complete: Full LlamaIndex + Gemini migration
-- ✅ 25 books indexed (3,547 chunks, 92MB storage)
-- ✅ CLI query tool working (12s load + 389ms query)
-- ⏳ MCP server ready but untested in VS Code
-
-**Next Priority:**
-- Test VS Code MCP integration (`/research` prompt)
-- Measure actual MCP startup time
-- Implement file watcher for delta indexing
-```
