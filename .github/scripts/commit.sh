@@ -7,11 +7,14 @@ EXIT_CODE=$?
 
 if [ $EXIT_CODE -eq 0 ]; then
     git pull && git push
-    osascript -e 'display notification "Changes committed and pushed" with title "📚 Personal Library - Success"'
+    osascript -e 'display notification "Changes committed and pushed" with title "📚 Personal Library - Success"' &
+    echo "✅ Committed and pushed successfully"
 elif echo "$OUTPUT" | grep -q 'nothing to commit'; then
-    osascript -e 'display notification "No changes to commit" with title "📚 Personal Library - Nothing to commit"'
+    osascript -e 'display notification "No changes to commit" with title "📚 Personal Library - Nothing to commit"' &
+    echo "⚪ Nothing to commit"
 else
-    osascript -e 'display notification "Check terminal for details" with title "❌ Personal Library - Error"'
+    osascript -e 'display notification "Check terminal for details" with title "❌ Personal Library - Error"' &
+    echo "❌ Error:"
     echo "$OUTPUT"
     exit 1
 fi
