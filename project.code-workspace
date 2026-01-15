@@ -17,7 +17,7 @@
         "group": "build",
         "presentation": {
           "echo": false,
-          "reveal": "always",
+          "reveal": "silent",
           "focus": false,
           "panel": "shared",
           "clear": true
