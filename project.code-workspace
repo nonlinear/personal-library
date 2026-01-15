@@ -6,33 +6,5 @@
     {
       "path": "./"
     }
-  ],
-  "tasks": {
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "label": "🔄 Commit",
-        "type": "shell",
-        "command": ".github/scripts/commit.sh \"${input:commitMessage}\"",
-        "group": "build",
-        "presentation": {
-          "echo": false,
-          "reveal": "always",
-          "focus": false,
-          "panel": "shared",
-          "clear": true,
-          "close": true
-        },
-        "problemMatcher": []
-      }
-    ],
-    "inputs": [
-      {
-        "id": "commitMessage",
-        "type": "promptString",
-        "description": "Commit message:",
-        "default": "docs: update documentation"
-      }
-    ]
-  }
+  ]
 }
