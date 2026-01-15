@@ -7,17 +7,11 @@ EXIT_CODE=$?
 
 if [ $EXIT_CODE -eq 0 ]; then
     git pull && git push
-    echo ""
-    echo "✅ 📚 Personal Library - Committed and pushed successfully!"
-    echo ""
+    terminal-notifier -title "📚 Personal Library" -subtitle "Success" -message "Changes committed and pushed" -sound default
 elif echo "$OUTPUT" | grep -q 'nothing to commit'; then
-    echo ""
-    echo "⚪ 📚 Personal Library - Nothing to commit"
-    echo ""
+    terminal-notifier -title "📚 Personal Library" -subtitle "Nothing to commit" -message "No changes detected" -sound default
 else
-    echo ""
-    echo "❌ 📚 Personal Library - Error:"
+    terminal-notifier -title "📚 Personal Library" -subtitle "Error" -message "Check terminal for details" -sound default
     echo "$OUTPUT"
-    echo ""
     exit 1
 fi
