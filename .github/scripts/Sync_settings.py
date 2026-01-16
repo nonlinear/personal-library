@@ -55,12 +55,12 @@ if __name__ == "__main__":
         sync_folders(latest_github, github_folders, exclude=["copilot-instructions.md"])
         print("✅ .github sync complete.\n")
 
-    # Sync .vscode folders
+    # Sync .vscode folders (excluding extensions)
     vscode_folders = [p / ".vscode" for p in projects]
     latest_vscode = get_latest_folder(vscode_folders)
     if latest_vscode:
         print(f"📁 Syncing .vscode from: {latest_vscode.parent.name}")
-        sync_folders(latest_vscode, vscode_folders)
+        sync_folders(latest_vscode, vscode_folders, exclude=["extensions"])
         print("✅ .vscode sync complete.\n")
 
     # Sync .env files (contains sensitive configuration)
