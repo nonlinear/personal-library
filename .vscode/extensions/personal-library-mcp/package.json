@@ -1,0 +1,30 @@
+{
+  "name": "personal-library-mcp",
+  "displayName": "Personal Library MCP",
+  "description": "Search your personal book library via MCP in VS Code",
+  "version": "0.1.0",
+  "publisher": "nonlinear",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "AI"
+  ],
+  "activationEvents": [
+    "onLanguageModelTool:query_library",
+    "onLanguageModelTool:list_topics",
+    "onLanguageModelTool:list_books"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {},
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.x",
+    "@types/vscode": "^1.95.0",
+    "typescript": "^5.3.0"
+  }
+}
