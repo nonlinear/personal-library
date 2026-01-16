@@ -45,7 +45,8 @@ all_documents = []
 for topic in metadata_json['topics']:
     topic_id = topic['id']
     topic_label = topic['label']
-    topic_dir = BOOKS_DIR / topic_id
+    # Use label (original folder name) not id (slugified)
+    topic_dir = BOOKS_DIR / topic_label
 
     print(f"\n   Topic: {topic_label}")
 

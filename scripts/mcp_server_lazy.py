@@ -325,14 +325,20 @@ async def main():
                 break
 
             request = json.loads(line.strip())
-            print(f"[{time.time()-start:.3f}s] Processing method: {request.get('method')}", file=sys.stderr, flush=True)
+            request_id = request.get('id')
+            print(f"[{time.time()-start:.3f}s] Processing method: {request.get('method')} (id={request_id})", file=sys.stderr, flush=True)
 
             response = await handle_mcp_request(request)
 
-            # Only send response if not None (notifications don't get responses)
-            if response is not None:
+            # JSON-RPC: Requests (with id) always get responses, notifications don't
+            if request_id is not None:
+                json_rpc_response = {
+                    "jsonrpc": "2.0",
+                    "id": request_id,
+                    "result": response if response is not None else {}
+                }
                 print(f"[{time.time()-start:.3f}s] Sending response", file=sys.stderr, flush=True)
-                print(json.dumps(response), flush=True)
+                print(json.dumps(json_rpc_response), flush=True)
 
         except json.JSONDecodeError:
             continue
