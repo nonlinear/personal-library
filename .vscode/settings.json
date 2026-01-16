@@ -11,5 +11,15 @@
         "SENTENCE_TRANSFORMERS_HOME": "/Users/nfrota/Documents/personal library/models"
       }
     }
+  },
+  "workbench.colorCustomizations": {
+    "[Default Light+]": {
+      "sideBar.background": "#fff3e0",
+      "sideBarSectionHeader.background": "#ff6b35",
+      "sideBarSectionHeader.foreground": "#ffffff",
+      "sideBarSectionHeader.border": "#ff6b35",
+      "sideBar.foreground": "#333333",
+      "sideBarTitle.foreground": "#ff6b35"
+    }
   }
 }
