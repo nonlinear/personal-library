@@ -79,25 +79,21 @@ graph TD
 
 ## Installation
 
-### Prerequisites
-
-Before installation, you need:
-
-1. Python 3.11 or higher
+### 1. Install Python 3.11 or higher
 
 - macOS`brew install python@3.11`
 - Ubuntu/Debian `sudo apt install python3.11`
 - Windows [Download from python.org](https://www.python.org/downloads/)
 - Verify: `python3.11 --version`
 
-### Installation
+### 2. Setup
 
 1. Run setup script: `bash ./scripts/setup.sh`
    - Installs Python dependencies
    - Downloads local embedding model (all-MiniLM-L6-v2, ~90MB)
    - Model saved in `models/` directory (not tracked by git)
 
-## BYOB (Bring Your Own Books)
+### 3. BYOB (Bring Your Own Books)
 
 1. Add your books to `books/TOPICNAME/*.epub`
 2. Generate metadata: `bash python3.11 scripts/generate_metadata.py`
@@ -107,7 +103,7 @@ Before installation, you need:
    - ~90MB for 34 books (local embeddings)
 4. Test: `bash python3.11 scripts/query_partitioned.py "what books discuss AI ethics?" --topic ai`
 
-### VS Code Extension
+### 4. VSCode Extension
 
 1. Install the Personal Library MCP extension
    - `bash code --install-extension https://github.com/nonlinear/personal-library/raw/main/.vscode/extensions/personal-library-mcp/personal-library-mcp-latest.vsix`
