@@ -19,8 +19,8 @@ from typing import Optional, List, Dict
 import asyncio
 
 # Paths
-STORAGE_DIR = Path(__file__).parent.parent / "storage"
-METADATA_FILE = STORAGE_DIR / "metadata.json"
+BOOKS_DIR = Path(__file__).parent.parent / "books"
+METADATA_FILE = BOOKS_DIR / "metadata.json"
 
 # Heavy imports - lazy loaded on first query
 _lazy_imports_loaded = False
@@ -68,7 +68,18 @@ def load_topic(topic_id: str) -> Dict:
 
     print(f"Loading topic: {topic_id}...", file=sys.stderr, flush=True)
 
-    topic_dir = STORAGE_DIR / topic_id
+    # Find topic label from metadata
+    topic_label = None
+    for topic in metadata['topics']:
+        if topic['id'] == topic_id:
+            topic_label = topic['label']
+            break
+
+    if not topic_label:
+        print(f"⚠️  Topic {topic_id} not found in metadata", file=sys.stderr, flush=True)
+        return None
+
+    topic_dir = BOOKS_DIR / topic_label
     faiss_file = topic_dir / "faiss.index"
     chunks_file = topic_dir / "chunks.pkl"
 

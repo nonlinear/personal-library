@@ -25,8 +25,7 @@ print("✓ Using local embedding model: all-MiniLM-L6-v2 (384-dim)")
 
 # Paths
 BOOKS_DIR = Path(__file__).parent.parent / "books"
-STORAGE_DIR = Path(__file__).parent.parent / "storage"
-METADATA_FILE = STORAGE_DIR / "metadata.json"
+METADATA_FILE = BOOKS_DIR / "metadata.json"
 
 print("📚 Indexing books with local embeddings")
 print("=" * 50)
@@ -93,34 +92,26 @@ print("   ✓ Index built")
 
 # Save index temporarily (needed for partitioning)
 print("\n4. Saving to temporary storage...")
-STORAGE_DIR.mkdir(exist_ok=True)
-index.storage_context.persist(persist_dir=str(STORAGE_DIR))
+import tempfile
+temp_dir = tempfile.mkdtemp()
+index.storage_context.persist(persist_dir=temp_dir)
 
 # Partition by topic for lazy loading
 print("\n5. Partitioning by topic for MCP optimization...")
 import subprocess
 partition_script = Path(__file__).parent / "partition_storage.py"
-result = subprocess.run([sys.executable, str(partition_script)], capture_output=True, text=True)
+result = subprocess.run([sys.executable, str(partition_script), temp_dir], capture_output=True, text=True)
 if result.returncode == 0:
     print("   ✓ Storage partitioned by topic")
 
-    # Clean up temporary monolithic files (now using partitioned storage)
-    import os
-    deprecated_files = [
-        STORAGE_DIR / "default__vector_store.json",
-        STORAGE_DIR / "docstore.json",
-        STORAGE_DIR / "graph_store.json",
-        STORAGE_DIR / "image__vector_store.json",
-        STORAGE_DIR / "index_store.json"
-    ]
-    for f in deprecated_files:
-        if f.exists():
-            os.remove(f)
+    # Clean up temporary directory
+    import shutil
+    shutil.rmtree(temp_dir)
     print("   ✓ Cleaned up temporary files")
 else:
     print(f"   ⚠️  Partitioning failed: {result.stderr}")
 
 print("\n🎉 Indexing complete!")
 print(f"   Documents: {len(all_documents):,}")
-print(f"   Storage: {STORAGE_DIR}")
+print(f"   Storage: books/<topic>/")
 print(f"   Structure: topic-partitioned (lazy-loading ready)")

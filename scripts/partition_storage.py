@@ -20,11 +20,19 @@ import faiss
 import numpy as np
 
 # Paths
-STORAGE_DIR = Path(__file__).parent.parent / "storage"
-METADATA_FILE = STORAGE_DIR / "metadata.json"
-VECTOR_STORE_FILE = STORAGE_DIR / "default__vector_store.json"
-DOCSTORE_FILE = STORAGE_DIR / "docstore.json"
-INDEX_STORE_FILE = STORAGE_DIR / "index_store.json"
+BOOKS_DIR = Path(__file__).parent.parent / "books"
+METADATA_FILE = BOOKS_DIR / "metadata.json"
+# Temporary storage (created during indexing)
+import tempfile
+import sys
+if len(sys.argv) > 1:
+    TEMP_STORAGE_DIR = Path(sys.argv[1])
+else:
+    print("Error: Temporary storage path required as argument")
+    sys.exit(1)
+
+VECTOR_STORE_FILE = TEMP_STORAGE_DIR / "default__vector_store.json"
+DOCSTORE_FILE = TEMP_STORAGE_DIR / "docstore.json"
 
 def main():
     print("="*60)
@@ -95,18 +103,22 @@ def main():
         count = len(topic_data[topic_id]['chunks'])
         print(f"   {topic_id}: {count} chunks")
 
-    # 5. Create partitioned storage
-    print("\n5. Creating partitioned storage...")
+    # 5. Create partitioned storage - save in books/<topic_label>/
+    print("\n5. Creating partitioned storage in books/ folders...")
+
+    # Build topic_id → topic_label mapping
+    topic_labels = {t['id']: t['label'] for t in metadata['topics']}
 
     for topic_id in topics:
-        topic_dir = STORAGE_DIR / topic_id
+        topic_label = topic_labels[topic_id]
+        topic_dir = BOOKS_DIR / topic_label
         topic_dir.mkdir(exist_ok=True)
 
         topic_chunks = topic_data[topic_id]['chunks']
         topic_embeddings = topic_data[topic_id]['embeddings']
 
         if not topic_chunks:
-            print(f"   ⚠️  {topic_id}: No chunks, skipping")
+            print(f"   ⚠️  {topic_label}: No chunks, skipping")
             continue
 
         # Create FAISS index from embeddings
@@ -129,20 +141,22 @@ def main():
         faiss_size = topic_faiss_file.stat().st_size / 1024
         chunks_size = topic_chunks_file.stat().st_size / 1024 / 1024
 
-        print(f"   ✅ {topic_id}: {len(topic_chunks)} chunks, {faiss_size:.1f}KB FAISS, {chunks_size:.2f}MB chunks")
+        print(f"   ✅ {topic_label}: {len(topic_chunks)} chunks, {faiss_size:.1f}KB FAISS, {chunks_size:.2f}MB chunks")
 
     # 6. Summary
     print("\n" + "="*60)
     print("✅ Partitioning Complete!")
     print("="*60)
-    print(f"Created {len(topics)} topic-specific storage directories")
+    print(f"Created {len(topics)} topic-specific storage in books/ folders")
     print("\nStructure:")
-    print("  storage/")
-    print("    metadata.json (19KB - always loaded)")
+    print("  books/")
+    print("    metadata.json (navigation map - always loaded)")
     for topic_id in topics:
-        topic_dir = STORAGE_DIR / topic_id
-        if topic_dir.exists():
-            print(f"    {topic_id}/")
+        topic_label = topic_labels[topic_id]
+        topic_dir = BOOKS_DIR / topic_label
+        if topic_dir.exists() and (topic_dir / "faiss.index").exists():
+            print(f"    {topic_label}/")
+            print(f"      *.epub (books)")
             print(f"      faiss.index (lazy loaded)")
             print(f"      chunks.pkl (lazy loaded)")
     print("\n💡 MCP startup = instant (only metadata.json)")

@@ -19,8 +19,6 @@ This system is a **semantic orientation tool**, not a conversational assistant.
 
 ## Architecture
 
-### Vault Structure
-
 ```
 books/
 ├── topic_a/
@@ -38,22 +36,7 @@ books/
 
 ## The Map: `metadata.json`
 
-**Purpose:** Minimal abstraction for rapid AI decision-making.
-
-**Not:**
-
-- A content copy
-- A search index
-- A documentation system
-
-**Design decisions:**
-
-- Tags exist only on books (semantic signal)
-- Topics have: name + short description
-- No text duplication
-- Every field serves navigation
-
----
+Purpose: Minimal abstraction for rapid AI decision-making.
 
 ```mermaid
 graph TD
@@ -78,6 +61,8 @@ graph TD
 ```
 
 ## Installation
+
+### 0. clone this repo
 
 ### 1. Install Python 3.11 or higher
 
