@@ -1,11 +1,14 @@
 # Books (BYOB: Bring Your Own Books)
 books/**
 !books/.gitkeep
+# Keep EPUBs but ignore indices/metadata inside books/
+!books/**/*.epub
+books/**/*.pkl
+books/**/*.index
+books/metadata.json
 
-# Storage (databases, indexes, metadata)
-storage/**
-!storage/.gitkeep
-!storage/README.md
+# Storage (deprecated - now inside books/)
+storage/
 
 # Models (local embedding models)
 models/

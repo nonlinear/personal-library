@@ -22,8 +22,7 @@ import re
 
 # Paths
 BOOKS_DIR = Path(__file__).parent.parent / "books"
-STORAGE_DIR = Path(__file__).parent.parent / "storage"
-METADATA_FILE = STORAGE_DIR / "metadata.json"
+METADATA_FILE = BOOKS_DIR / "metadata.json"
 
 # Tag extraction model (KeyBERT with MiniLM backend)
 print("Loading KeyBERT model...")
@@ -200,9 +199,6 @@ def main():
 
     # Scan books
     metadata = scan_books_folder()
-
-    # Ensure storage/ exists
-    STORAGE_DIR.mkdir(exist_ok=True)
 
     # Write metadata.json
     with open(METADATA_FILE, 'w', encoding='utf-8') as f:

@@ -106,7 +106,7 @@ Once scope is determined, call `query_library`:
 
 1. **Synthesize** information from results
 2. **Ground** every claim in specific chunks
-3. **Cite** sources inline with emoji numbers: 1️⃣ 2️⃣ 3️⃣ etc.
+3. **Cite** sources inline with emoji numbers: 1️⃣ 2️⃣ 3️⃣ etc. (numbering resets per query, not cumulative)
 4. **Acknowledge gaps** if incomplete
 
 **Citation Format:**
@@ -134,7 +134,6 @@ At the end, list sources with horizontal rule separator.
 **Citation Rules:**
 
 1. **File path format**: Markdown link with URL-encoded spaces
-
    - Format: `[Book Title.epub](../personal%20library/books/topic/Book%20Title.epub)`
    - Display text: Book title WITH .epub extension (anti-spoofing)
    - Link URL: Workspace-relative path WITH .epub
@@ -143,7 +142,6 @@ At the end, list sources with horizontal rule separator.
    - Each citation on its own line
 
    **CRITICAL: Book Title vs Filename:**
-
    - MCP returns `book_title` from metadata (can be fancy/long)
    - **Actual filename may differ** (e.g., "Debt - David Graeber.epub")
    - **MUST get exact filename from `metadata.json`** before creating citation
@@ -151,7 +149,6 @@ At the end, list sources with horizontal rule separator.
    - The metadata.json MUST contain exact filenames or absolute paths
 
    **Path calculation:**
-
    - VS Code's link pill validation is VERY strict to prevent spoofing
    - **Step 1:** Read `metadata.json` (from MCP server) to get:
      1. Exact `filename` for each book (e.g., `"Debt - David Graeber.epub"`)
@@ -183,11 +180,11 @@ At the end, list sources with horizontal rule separator.
 ## Helper Commands
 
 **List topics:**
-`/library list topics`
+`/research list topics`
 
 **List books:**
-`/library list books`
-`/library list books in anthropocene`
+`/research list books`
+`/research list books in anthropocene`
 
 ---
 
