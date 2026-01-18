@@ -100,18 +100,18 @@ books/
 
 The Personal Library MCP is **provider-agnostic**. Pick your favorite AI environment:
 
-| Provider           | Status          | Notes                                                                                                                                                                                                                                                                       |
-| ------------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Terminal**       | ✅ Ready        | `python3.11 scripts/query_partitioned.py "your question" --topic ai`                                                                                                                                                                                                        |
-| **VS Code**        | ✅ Ready        | Install [.vsix extension](https://github.com/nonlinear/personal-library/raw/main/.vscode/extensions/personal-library-mcp/personal-library-mcp-latest.vsix) + [/research prompt](https://github.com/nonlinear/personal-library/blob/main/.github/prompts/research.prompt.md) |
-| **Claude Desktop** | 🤝 Collaborate? | Add to `~/Library/Application Support/Claude/claude_desktop_config.json` ([Personal Library signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8))                                                                  |
-| **OpenAI API**     | 🤝 Collaborate? | Function calling wrapper needed ([Personal Library signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8))                                                                                                           |
-| **LM Studio**      | 🤝 Collaborate? | Local model + MCP bridge ([Personal Library signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8))                                                                                                                  |
-| **OpenWebUI**      | 🤝 Collaborate? | Custom tool integration ([Personal Library signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8))                                                                                                                   |
+| Provider           | Status                                                                                                                                                                                                                |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Terminal**       | ✅ `python3.11 scripts/query_partitioned.py "your question" --topic ai`                                                                                                                                               |
+| **VS Code**        | ✅ `code --install-extension personal-library-mcp-latest.vsix` (or [download .vsix](https://github.com/nonlinear/personal-library/raw/main/.vscode/extensions/personal-library-mcp/personal-library-mcp-latest.vsix)) |
+| **Claude Desktop** | 👷 Pending                                                                                                                                                                                                            |
+| **OpenAI API**     | 👷 Pending                                                                                                                                                                                                            |
+| **LM Studio**      | 👷 Pending                                                                                                                                                                                                            |
+| **OpenWebUI**      | 👷 Pending                                                                                                                                                                                                            |
+
+> 👷 Wanna collaborate? Connect via [Personal Library signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8)
 
 ## Project Status
-
-> 🤖🚨 FOR AI: Always check these before starting work
 
 - **[Roadmap](roadmap.md)** - Planned features and in-progress work
 - **[Release Notes](release-notes.md)** - Completed features and deployments
