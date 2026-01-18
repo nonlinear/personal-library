@@ -4,10 +4,6 @@
 
 > All local (books, embedding models, database). [Connect with your favorite AI provider](#5-ai-provider-integration) and [ask away](#4-usage)
 
----
-
-## Useful for:
-
 | Possible uses               | Description                                                                                                                                                     |
 | :-------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ⚖️&nbsp;**Compliance**      | Collect all compliance and regulation manuals to test a new idea the proper way                                                                                 |
@@ -60,10 +56,9 @@ graph TD
    - `.epub` and `.pdf`
    - Each folder is a topic
 5. **Generate metadata**: `bash python3.11 scripts/generate_metadata.py`
-6. **Build index** (includes auto-partitioning): `bash python3.11 scripts/indexer.py`
+6. **Build index**: `bash python3.11 scripts/indexer.py`
    - Creates vector store in `storage/`
-   - Auto-partitions by topic for MCP lazy-loading
-   - ~90MB for 34 books (local embeddings)
+   - Auto-partitions by topic for MCP lazy-loading (less zigzag, let's tokens used, more precision)
 7. **Test**: `bash python3.11 scripts/query_partitioned.py "what books discuss AI ethics?" --topic ai`
 
 ```mermaid
