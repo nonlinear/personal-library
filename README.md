@@ -133,7 +133,8 @@ The Personal Library MCP is **provider-agnostic**. Use your favorite AI provider
 
 > 💡 **Want to add your idea?** Join [Personal Library signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8) and share your setup!
 
+> 🤖: See [CONTRIBUTING](.github/CONTRIBUTING.md) for git workflow & branch strategy
 > 🤖: See [ROADMAP](engine/docs/ROADMAP.md) for planned features & in-progress work
-> 🤖: See [CHANGELOG](engine/docs/CHANGELOG.md) for ersion history & completed features
+> 🤖: See [CHANGELOG](engine/docs/CHANGELOG.md) for version history & completed features
 > 🤖: See [CHECKS](engine/docs/CHECKS.md) for stability requirements & testing
-> 👷: Consider using [/whatsup prompt](https://github.com/nonlinear/nonlinear.github.io/blob/main/.github/prompts/whatsup.prompt.md) for updates
+> 👷: Consider using [/whatsup prompt](.github/prompts/whatsup.prompt.md) for updates
