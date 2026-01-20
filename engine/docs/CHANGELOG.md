@@ -2,6 +2,17 @@
 
 > Completed features and version history
 
+> 🤖
+>
+> [CHANGELOG](CHANGELOG.md) - What we did
+> [ROADMAP](ROADMAP.md) - What we wanna do
+> [CONTRIBUTING](../../.github/CONTRIBUTING.md) - How we do it
+> [CHECKS](CHECKS.md) - What we accept
+>
+> [/whatsup](../../.github/prompts/whatsup.prompt.md) - The prompt that keeps us sane
+>
+> 🤖
+
 ---
 
 ## Release Format
@@ -324,13 +335,6 @@ Each release documents:
 **Impact:** Full local MCP infrastructure for book queries
 
 ---
-
-> 🤖: See [ROADMAP](engine/docs/ROADMAP.md) for planned features & in-progress work
-> 🤖: See [CHANGELOG](engine/docs/CHANGELOG.md) for ersion history & completed features
-> 🤖: See [CHECKS](engine/docs/CHECKS.md) for stability requirements & testing
-> 👷: Consider using [/whatsup prompt](https://github.com/nonlinear/nonlinear.github.io/blob/main/.github/prompts/whatsup.prompt.md) for updates
-
-v0.0: Foundation ✅ (Initial Release)
 
 **Branch:** `main` (initial commit)
 
