@@ -54,6 +54,11 @@ flowchart TD
 
 **AI: README is the ONLY source of truth for file locations**
 
+**🚨 CRITICAL: READ-ONLY**
+- ✅ **READ** README to find status files locations
+- ❌ **DO NOT EDIT** README without explicit user permission
+- README is the entry point - changes affect entire project discovery
+
 ### Read README First
 
 ```bash

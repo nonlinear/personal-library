@@ -48,20 +48,37 @@
 
 **❌ Pending:**
 
+- [ ] **Diagnostic tool for topic health checks** (based on `test_chunking.py`)
+  - [x] Created `scripts/test_chunking.py` - single-topic chunking diagnostics
+  - [ ] Enhance with CLI argument: `python3.11 scripts/test_chunking.py <topic-id>`
+  - [ ] Show per-book stats: filesize → text extracted → actual chunks created
+  - [ ] Performance metrics: load time, index time, chunks/second
+  - [ ] Efficiency report: expected vs actual chunks ratio
+  - [ ] Use before/after reindexing to validate improvements
+  - [ ] Example: `python3.11 scripts/test_chunking.py cybersecurity_applied`
 - [ ] `scripts/update_delta.py` - automated change detection
   - [ ] Compare `books/` filesystem vs `metadata.json`
   - [ ] Identify deltas (added/removed/modified books)
   - [ ] Auto-reindex only affected topic directories
   - [ ] Incremental metadata.json updates
+  - [ ] **Stale index cleanup** - detect and remove orphaned indices
+    - [ ] When topic splits into subfolders (e.g., `AI/` → `AI/theory/`, `AI/policy/`)
+    - [ ] Delete parent indices: `books/AI/chunks.pkl`, `books/AI/faiss.index`
+    - [ ] Create new subfolder indices: `books/AI/theory/chunks.pkl`, etc.
+    - [ ] Detection: Parent folder has subfolders with books but no indices
+    - [ ] Example cleanup: Remove `books/AI/chunks.pkl` when `AI/theory/` detected
 - [ ] CLI command: `python3.11 scripts/update_delta.py`
 - [ ] Performance benchmarks (delta vs full reindex)
 
 **Granular Indexing Quality Epic:**
 
+> 🚨 **CRITICAL ISSUE FOUND (2026-01-20):** Current indexing creates only ~0.7 chunks/book (137 chunks from 197 books). Expected: 100+ chunks/book for typical 200-page books. Root cause unknown - needs investigation.
+
 - [ ] **Indexing report system** (replace FAILED.md with comprehensive REPORT)
+  - [ ] Track timing metrics (total time, time per book, chunks per second)
   - [ ] Generate `engine/docs/REPORT.md` after each indexing run
   - [ ] **✅ Success section:** Topics indexed successfully with stats
-    - Example: `✅ AI: 1224 chunks from 8 books (153 chunks/book avg)`
+    - Example: `✅ AI: 1224 chunks from 8 books (153 chunks/book avg) - 2.3min`
   - [ ] **⚠️ Alert section:** Suspicious chunking (health check failures)
     - Example: `⚠️ product_architecture: 5 chunks from 5MB (expected ~5000)`
     - Suggest re-index with `--force` flag
@@ -114,7 +131,91 @@
 - [ ] LM Studio integration guide
 - [ ] OpenWebUI custom tool
 - [ ] Provider comparison benchmarks
-- [v0.5: Automation & Advanced Features ❌ (PLANNED)
+
+---
+
+## v0.2: VS Code Extension Configuration ✅ (COMPLETED - 2026-01-20)
+
+**Branch:** Direct to `main` (hotfix)
+
+**Target audience:** VS Code users with different Python setups or library locations
+
+**Goal:** Make extension work for any user - no hardcoded paths
+
+**Problem:** v0.1.0 extension hardcoded `/opt/homebrew/bin/python3.11` and `books/` path
+
+**✅ Completed:**
+
+- [x] Added configuration settings to `package.json`
+  - [x] `personalLibrary.pythonPath` - configurable Python interpreter
+  - [x] `personalLibrary.booksPath` - configurable books directory (relative or absolute)
+- [x] Updated `extension.ts` to read configuration values
+  - [x] Python path from config (defaults to `python3`)
+  - [x] Books path from config (defaults to `books`)
+  - [x] Support for absolute and workspace-relative paths
+- [x] Fixed `research.py` STORAGE_DIR bug (undefined variable → BOOKS_DIR)
+- [x] Bumped extension version to 0.2.0
+- [x] Created new `.vsix` package and `latest` symlink
+- [x] Updated README.md with VS Code Setup section
+  - [x] Installation instructions
+  - [x] Configuration examples for macOS/Linux/Windows
+  - [x] Platform-specific Python paths
+
+**Impact:** Extension now portable across different setups
+
+**Migration:** Users must add settings to `.vscode/settings.json`:
+
+```json
+{
+  "personalLibrary.pythonPath": "python3",
+  "personalLibrary.booksPath": "books"
+}
+```
+
+---
+
+## v0.5: VS Code Extension UX Epic ❌ (PLANNED)
+
+**Branch:** `v0.5-vscode-ux` (when started)
+
+**Target audience:** VS Code users doing research with /research prompt
+
+**Goal:** Reduce guessing in AI tab - make books/folders directly referenceable
+
+**Problem:** Currently AI must guess which book/topic user wants. With focused search (post-subfolder reorganization), precision matters more.
+
+**Proposed solution:** Autocomplete for books/topics using `#` syntax
+
+- [ ] **# autocomplete for topics**
+  - Example: User types `/research in #cyber` → suggests `#cybersecurity_applied`, `#cybersecurity_history`, `#cybersecurity_strategy`
+  - Reads from `books/metadata.json` → topic IDs and labels
+  - Filters as user types
+- [ ] **# autocomplete for books**
+  - Example: User types `/research in #Molecular` → suggests `#Molecular Red` from anthropocene topic
+  - Shows book title + topic context in dropdown
+  - Autocomplete shows: `#Molecular Red (anthropocene)`
+- [ ] **Folder/subfolder awareness**
+  - Support nested references: `#cybersecurity/applied` or just `#applied` if unambiguous
+  - Show parent topic in autocomplete UI
+- [ ] **Integration with /research prompt**
+  - Parse `#` references before sending to MCP
+  - Convert to proper topic/book filters
+  - Example: `/research in #cybersecurity_applied what is SQL injection?`
+- [ ] **Extension configuration**
+  - Setting: `personalLibrary.enableAutocomplete` (default: true)
+  - Setting: `personalLibrary.metadataPath` (auto-detected from workspace)
+  - Refresh metadata on file change (watch `books/metadata.json`)
+
+**Benefits:**
+
+- No more guessing which topic AI will search
+- Faster, more precise research queries
+- Better UX for large libraries with many topics
+- Leverages existing metadata.json infrastructure
+
+---
+
+## v0.6: Automation & Advanced Features ❌ (PLANNED)
 
 **Branch:** `v0.5-automation` (when started)
 

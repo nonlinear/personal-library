@@ -55,13 +55,14 @@ def main():
     embeddings_dict = vector_store.get('embedding_dict', {})
     print(f"   Loaded {len(embeddings_dict)} embeddings")
 
-    # 3. Load docstore
+    # 3. Load docstore (contains chunks, not original documents)
     print("\n3. Loading docstore...")
     with open(DOCSTORE_FILE, 'r') as f:
         docstore = json.load(f)
 
+    # Get ALL nodes (chunks), not just root documents
     docs = docstore.get('docstore/data', {})
-    print(f"   Loaded {len(docs)} documents")
+    print(f"   Loaded {len(docs)} chunks")
 
 
     # 4. Group by topic
@@ -106,13 +107,14 @@ def main():
     # 5. Create partitioned storage - save in books/<topic_label>/
     print("\n5. Creating partitioned storage in books/ folders...")
 
-    # Build topic_id → topic_label mapping
-    topic_labels = {t['id']: t['label'] for t in metadata['topics']}
+    # Build topic mappings
+    topic_info = {t['id']: {'label': t['label'], 'folder_path': t.get('folder_path', t['label'])} for t in metadata['topics']}
 
     for topic_id in topics:
-        topic_label = topic_labels[topic_id]
-        topic_dir = BOOKS_DIR / topic_label
-        topic_dir.mkdir(exist_ok=True)
+        topic_label = topic_info[topic_id]['label']
+        folder_path = topic_info[topic_id]['folder_path']
+        topic_dir = BOOKS_DIR / folder_path
+        topic_dir.mkdir(exist_ok=True, parents=True)
 
         topic_chunks = topic_data[topic_id]['chunks']
         topic_embeddings = topic_data[topic_id]['embeddings']
@@ -137,6 +139,19 @@ def main():
         with open(topic_chunks_file, 'wb') as f:
             pickle.dump(topic_chunks, f)
 
+        # Also save as JSON for debugging
+        topic_chunks_json = topic_dir / "chunks.json"
+        chunks_for_json = [{
+            'chunk_full': c['text'],
+            'book_id': c['metadata'].get('book_id'),
+            'book_title': c['metadata'].get('book_title'),
+            'book_author': c['metadata'].get('book_author'),
+            'topic_id': c['metadata'].get('topic_id'),
+            'topic_label': c['metadata'].get('topic_label')
+        } for c in topic_chunks]
+        with open(topic_chunks_json, 'w') as f:
+            json.dump(chunks_for_json, f, indent=2)
+
         # Stats
         faiss_size = topic_faiss_file.stat().st_size / 1024
         chunks_size = topic_chunks_file.stat().st_size / 1024 / 1024
@@ -152,8 +167,9 @@ def main():
     print("  books/")
     print("    metadata.json (navigation map - always loaded)")
     for topic_id in topics:
-        topic_label = topic_labels[topic_id]
-        topic_dir = BOOKS_DIR / topic_label
+        folder_path = topic_info[topic_id]['folder_path']
+        topic_label = topic_info[topic_id]['label']
+        topic_dir = BOOKS_DIR / folder_path
         if topic_dir.exists() and (topic_dir / "faiss.index").exists():
             print(f"    {topic_label}/")
             print(f"      *.epub (books)")

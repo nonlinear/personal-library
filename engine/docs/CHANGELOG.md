@@ -14,6 +14,116 @@ Each release documents:
 
 ---
 
+## v0.2.6: Partitioning Bug Fix & Library Cleanup ✅ (Jan 20, 2026)
+
+**👥 Who needs to know:** Anyone running full library reindexing
+
+**📦 What's new:**
+
+**Bug Fix:**
+
+- **Fixed partition_storage.py crash:** `UnboundLocalError: topic_label` when creating per-topic indices
+  - Root cause: Variable used before assignment in loop
+  - Impact: Full reindexing (indexer.py) would fail at partitioning step
+  - Now works: `topic_label = topic_info[topic_id]['label']` added before use
+
+**Library Maintenance:**
+
+- Removed corrupted RPG/changeling topic (10 PDFs with "Bad Zip file" errors)
+- Regenerated metadata after cleanup: 36 topics, 247 books (was 37 topics, 247 books)
+- Verified hugo topic indexes correctly: 94 chunks from "Build Websites with Hugo"
+
+**Files changed:**
+
+- `scripts/partition_storage.py`: Added topic_label assignment (line 114)
+
+**🔧 Migration:** None - just a bug fix
+
+---
+
+## v0.2.5: Path Resolution & Platform-Agnostic Prompt ✅ (Jan 20, 2026)
+
+**👥 Who needs to know:** Users with subtopics (AI/theory) or folder names with spaces (product architecture)
+
+**📦 What's new:**
+
+**Path Resolution Fix:**
+
+- **Added `folder_path` field** to metadata.json for all topics
+  - Solves ambiguity: `ai_theory` → `"AI/theory"` vs `product_architecture` → `"product architecture"`
+  - No more guessing from topic IDs with underscores
+- **Updated all scripts** to use `folder_path` from metadata:
+  - `research.py` - FAISS index loading
+  - `reindex_topic.py` - Topic folder location
+  - `mcp_server.py` - MCP query routing
+  - `partition_storage.py` - Storage partitioning
+- **Citation links now work** for nested topics (was broken for subtopics)
+
+**Prompt Improvements:**
+
+- **Platform-agnostic research.prompt.md:**
+  - Removed MCP-specific tool calls
+  - Generic command execution: `python3.11 scripts/research.py "{query}" --topic {topic}`
+  - Works with any AI provider: VS Code (run_in_terminal), Claude Desktop (MCP/shell), OpenAI (subprocess), Terminal (manual)
+- **Background execution support:** Documents `isBackground: true` for silent queries
+
+**Files changed:**
+
+- `scripts/generate_metadata.py`: Adds `folder_path` field (e.g., `"AI/theory"`, `"product architecture"`)
+- `scripts/research.py`: Uses `folder_path` instead of splitting topic_id
+- `scripts/reindex_topic.py`: Uses `folder_path` for topic directory
+- `scripts/mcp_server.py`: Uses `folder_path` for query routing
+- `scripts/partition_storage.py`: Uses `folder_path` for storage paths
+- `.github/prompts/research.prompt.md`: Platform-agnostic instructions with folder_path path calculation
+
+**🔧 Migration:**
+
+1. **Regenerate metadata:** `python3.11 scripts/generate_metadata.py` (adds folder_path to all topics)
+2. No reindexing needed - existing indices work fine
+
+**Example fixes:**
+
+- Citation: `[Superintelligence.epub](../personal%20library/books/AI/theory/Superintelligence.epub)` ✅ (was: `books/ai_theory/` ❌)
+- Path lookup: `books/product architecture/` ✅ (was: `books/product/architecture/` ❌)
+
+---
+
+## v0.2.4: Critical Chunking Bug Fix ✅ (Jan 20, 2026)
+
+**👥 Who needs to know:** ALL USERS - this fix improves search quality 400x
+
+**📦 What's new:**
+
+**Critical Bug Fixed:**
+
+- **Chunking disaster:** Partitioning script was only saving 1 chunk per book instead of all chunks
+  - **Before:** 137 chunks from 197 books (0.7 chunks/book) = unusable search
+  - **After:** 54,962 chunks from 282 books (195 chunks/book avg) = proper granular search
+  - **Impact:** Nearly 2x the health target (100+ chunks/book)
+  - Search can now find specific passages instead of entire books
+
+**Root cause:** `partition_storage.py` was iterating through docstore (original documents) instead of the chunked nodes created during indexing
+
+**Files changed:**
+
+- `scripts/partition_storage.py`: Fixed to save all chunks, not just documents
+- Added `chunks.json` alongside `chunks.pkl` for easier debugging
+
+**🔧 Migration:**
+
+1. **Reindex required:** Run `python3.11 scripts/indexer.py` to rebuild all indices with proper chunking
+2. Takes 5-10 minutes for full library (worth it for 400x improvement!)
+
+**Example improvements:**
+
+- Small books: 84-148 chunks (was 1)
+- Medium books: 400-700 chunks (was 1)
+- Large books: 700-5,000+ chunks (was 1-2)
+
+**Discovered during:** NAS books reorganization + chunking diagnostics
+
+---
+
 ## v0.2.3: Critical Bug Fixes ✅ (Jan 20, 2026)
 
 **👥 Who needs to know:**

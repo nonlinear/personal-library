@@ -110,22 +110,22 @@ Make sure to **specify topic or book** in your question. MCP will try to disambi
 
 > 👉 Without `/research` your AI uses general knowledge. With it you get precise citations from your library
 
----
+<!-- ---
 
 ## AI Integration
 
 The Personal Library MCP is **provider-agnostic**. Use your favorite AI provider:
 
-| AI Provider        | Status                                                                                                                                                        |
-| :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Terminal**       | ✅ `python3.11 scripts/research.py "your question" --topic ai`                                                                                                |
-| **VS Code**        | ✅ `code --install-extension https://github.com/nonlinear/personal-library/raw/main/.vscode/extensions/personal-library-mcp/personal-library-mcp-latest.vsix` |
-| **Claude Desktop** | 👷 Pending                                                                                                                                                    |
-| **OpenAI API**     | 👷 Pending                                                                                                                                                    |
-| **LM Studio**      | 👷 Pending                                                                                                                                                    |
-| **OpenWebUI**      | 👷 Pending                                                                                                                                                    |
+| AI Provider        | Status                                                                                                                                                               |
+| :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Terminal**       | ✅ `python3.11 scripts/research.py "your question" --topic ai`                                                                                                       |
+| **VS Code**        | ✅ `bash   code --install-extension https://github.com/nonlinear/personal-library/raw/main/.vscode/extensions/personal-library-mcp/personal-library-mcp-latest.vsix` |
+| **Claude Desktop** | 👷 Pending                                                                                                                                                           |
+| **OpenAI API**     | 👷 Pending                                                                                                                                                           |
+| **LM Studio**      | 👷 Pending                                                                                                                                                           |
+| **OpenWebUI**      | 👷 Pending                                                                                                                                                           |
 
-> 👷 Wanna collaborate? Connect via [Personal Library signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8)
+> 👷 Wanna collaborate? Connect via [Personal Library signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8) -->
 
 ---
 
