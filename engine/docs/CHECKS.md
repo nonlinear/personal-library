@@ -2,12 +2,16 @@
 
 > **Definition of Done:** Tests required before pushing to production
 
-**📋 Project Status Files:**
-
-- [README](../../README.md) - Entry point & quick start
-- [ROADMAP](ROADMAP.md) - Planned features & in-progress work
-- [CHANGELOG](CHANGELOG.md) - Completed features & version history
-- **CHECKS** (you are here) - Stability requirements & testing
+> 🤖
+>
+> [CHANGELOG](CHANGELOG.md) - What we did
+> [ROADMAP](ROADMAP.md) - What we wanna do
+> [CONTRIBUTING](../../.github/CONTRIBUTING.md) - How we do it
+> [CHECKS](CHECKS.md) - What we accept
+>
+> [/whatsup](../../.github/prompts/whatsup.prompt.md) - The prompt that keeps us sane
+>
+> 🤖
 
 ---
 
@@ -563,12 +567,3 @@ fi
 ```bash
 chmod +x scripts/pre-push-check.sh
 ```
-
----
-
-> 🤖: See [ROADMAP](ROADMAP.md) for planned features & in-progress work
-> 🤖: See [CHANGELOG](CHANGELOG.md) for version history & completed features
-> 🤖: See [CHECKS](CHECKS.md) for stability requirements & testing
-> 🤖: Before any commit, follow [whatsup.prompt.md](../../.github/prompts/whatsup.prompt.md) workflow
-
----
