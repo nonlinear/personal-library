@@ -2,6 +2,8 @@
 
 ## Epic Development Strategy
 
+> 🤖 **Full workflow details:** See [.github/CONTRIBUTING.md](../../.github/CONTRIBUTING.md)
+
 **Each epic = one feature branch:**
 
 - Branch naming: `v{major}.{minor}-{feature-name}` (ex: `v0.3-delta-indexing`)
@@ -27,7 +29,7 @@
 
 ## Epic v0.3: Delta Indexing 🔶 (IN PROGRESS)
 
-**Branch:** `v0.3-delta-indexing` (when started)
+**Branch:** `v0.3-delta-indexing` ✅ **Active**
 
 **Target audience:** Users with large libraries who reindex frequently
 
