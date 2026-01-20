@@ -4,7 +4,7 @@
   "chat.mcp.servers": {
     "personal-library": {
       "command": "/opt/homebrew/bin/python3.11",
-      "args": ["/Users/nfrota/Documents/personal library/scripts/mcp_server_lazy.py"],
+      "args": ["/Users/nfrota/Documents/personal library/scripts/mcp_server.py"],
       "description": "Personal book library RAG - local BYOB system with lazy loading",
       "enabled": true,
       "env": {

@@ -45,7 +45,7 @@ async function callPythonQuery(params) {
         return JSON.stringify({ error: 'No workspace folder open' });
     }
     const pythonPath = '/opt/homebrew/bin/python3.11';
-    const scriptPath = path.join(workspaceFolder.uri.fsPath, 'scripts', 'query_partitioned.py');
+    const scriptPath = path.join(workspaceFolder.uri.fsPath, 'scripts', 'research.py');
     return new Promise((resolve) => {
         const args = [scriptPath, params.query];
         if (params.topic)
