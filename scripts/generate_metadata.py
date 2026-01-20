@@ -217,9 +217,12 @@ def scan_books_folder() -> Dict:
 
     topics = []
 
-    def process_topic_folder(topic_dir: Path, parent_topic_id: str = None):
+    def process_topic_folder(topic_dir: Path, parent_topic_id: str = None, parent_path: str = None):
         """Process a topic folder and optionally its subfolders."""
         topic_id = slugify(topic_dir.name)
+        # Build folder path relative to books/
+        folder_path = topic_dir.name if parent_path is None else f"{parent_path}/{topic_dir.name}"
+
         if parent_topic_id:
             topic_id = f"{parent_topic_id}_{topic_id}"
 
@@ -267,6 +270,7 @@ def scan_books_folder() -> Dict:
             topic_entry = {
                 "id": topic_id,
                 "label": topic_dir.name,
+                "folder_path": folder_path,  # e.g., "AI/theory" or "product architecture"
                 "description": ", ".join(topic_tags),
                 "books": books
             }
@@ -277,7 +281,7 @@ def scan_books_folder() -> Dict:
         for subfolder in sorted(topic_dir.iterdir()):
             if subfolder.is_dir() and not subfolder.name.startswith('.'):
                 # Recursively process subfolder
-                subfolder_topics = process_topic_folder(subfolder, topic_id)
+                subfolder_topics = process_topic_folder(subfolder, topic_id, folder_path)
                 result_topics.extend(subfolder_topics)
 
         return result_topics

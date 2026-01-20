@@ -44,7 +44,8 @@ async function callPythonQuery(params) {
     if (!workspaceFolder) {
         return JSON.stringify({ error: 'No workspace folder open' });
     }
-    const pythonPath = '/opt/homebrew/bin/python3.11';
+    const config = vscode.workspace.getConfiguration('personalLibrary');
+    const pythonPath = config.get('pythonPath', 'python3');
     const scriptPath = path.join(workspaceFolder.uri.fsPath, 'scripts', 'research.py');
     return new Promise((resolve) => {
         const args = [scriptPath, params.query];
@@ -104,7 +105,11 @@ function activate(context) {
                     new vscode.LanguageModelTextPart(JSON.stringify({ error: 'No workspace' }))
                 ]);
             }
-            const metadataPath = path.join(workspaceFolder.uri.fsPath, 'storage', 'metadata.json');
+            const config = vscode.workspace.getConfiguration('personalLibrary');
+            const booksPath = config.get('booksPath', 'books');
+            const metadataPath = path.isAbsolute(booksPath)
+                ? path.join(booksPath, 'metadata.json')
+                : path.join(workspaceFolder.uri.fsPath, booksPath, 'metadata.json');
             try {
                 const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
                 const topics = metadata.topics.map((t) => ({
@@ -138,7 +143,11 @@ function activate(context) {
                     new vscode.LanguageModelTextPart(JSON.stringify({ error: 'No workspace' }))
                 ]);
             }
-            const metadataPath = path.join(workspaceFolder.uri.fsPath, 'storage', 'metadata.json');
+            const config = vscode.workspace.getConfiguration('personalLibrary');
+            const booksPath = config.get('booksPath', 'books');
+            const metadataPath = path.isAbsolute(booksPath)
+                ? path.join(booksPath, 'metadata.json')
+                : path.join(workspaceFolder.uri.fsPath, booksPath, 'metadata.json');
             const params = options.input;
             try {
                 const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));

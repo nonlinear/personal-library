@@ -122,19 +122,9 @@ def load_topic(topic_id: str) -> Dict:
         return None
 
     # Reconstruct full path from flattened topic_id
-    # Handle nested topics (e.g., cybersecurity_applied → cybersecurity/applied/)
-    # AND root topics with underscores (e.g., product_architecture → product architecture/)
-    if '_' in topic_id:
-        # Try nested path first
-        nested_path = BOOKS_DIR / topic_id.replace('_', '/')
-
-        if nested_path.exists():
-            topic_dir = nested_path
-        else:
-            # Not nested - use label (which may have spaces)
-            topic_dir = BOOKS_DIR / topic_label
-    else:
-        topic_dir = BOOKS_DIR / topic_label
+    # Get folder path from metadata
+    folder_path = topic_data.get('folder_path', topic_label)
+    topic_dir = BOOKS_DIR / folder_path
     faiss_file = topic_dir / "faiss.index"
     chunks_file = topic_dir / "chunks.pkl"
 

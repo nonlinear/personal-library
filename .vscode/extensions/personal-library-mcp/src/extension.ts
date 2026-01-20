@@ -20,7 +20,8 @@ async function callPythonQuery(params: QueryParams): Promise<string> {
         return JSON.stringify({ error: 'No workspace folder open' });
     }
 
-    const pythonPath = '/opt/homebrew/bin/python3.11';
+    const config = vscode.workspace.getConfiguration('personalLibrary');
+    const pythonPath = config.get<string>('pythonPath', 'python3');
     const scriptPath = path.join(workspaceFolder.uri.fsPath, 'scripts', 'research.py');
 
     return new Promise((resolve) => {
@@ -86,7 +87,11 @@ export function activate(context: vscode.ExtensionContext) {
                 ]);
             }
 
-            const metadataPath = path.join(workspaceFolder.uri.fsPath, 'storage', 'metadata.json');
+            const config = vscode.workspace.getConfiguration('personalLibrary');
+            const booksPath = config.get<string>('booksPath', 'books');
+            const metadataPath = path.isAbsolute(booksPath)
+                ? path.join(booksPath, 'metadata.json')
+                : path.join(workspaceFolder.uri.fsPath, booksPath, 'metadata.json');
             try {
                 const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
                 const topics = metadata.topics.map((t: any) => ({
@@ -122,7 +127,11 @@ export function activate(context: vscode.ExtensionContext) {
                 ]);
             }
 
-            const metadataPath = path.join(workspaceFolder.uri.fsPath, 'storage', 'metadata.json');
+            const config = vscode.workspace.getConfiguration('personalLibrary');
+            const booksPath = config.get<string>('booksPath', 'books');
+            const metadataPath = path.isAbsolute(booksPath)
+                ? path.join(booksPath, 'metadata.json')
+                : path.join(workspaceFolder.uri.fsPath, booksPath, 'metadata.json');
             const params = options.input as TopicParams;
 
             try {

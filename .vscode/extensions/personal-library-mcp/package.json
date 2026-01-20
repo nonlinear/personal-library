@@ -2,7 +2,7 @@
   "name": "personal-library-mcp",
   "displayName": "Personal Library MCP",
   "description": "Search your personal book library via MCP in VS Code",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "nonlinear",
   "engines": {
     "vscode": "^1.95.0"
@@ -11,12 +11,26 @@
     "AI"
   ],
   "activationEvents": [
-    "onLanguageModelTool:query_library",
-    "onLanguageModelTool:list_topics",
-    "onLanguageModelTool:list_books"
+    "*"
   ],
   "main": "./out/extension.js",
-  "contributes": {},
+  "contributes": {
+    "configuration": {
+      "title": "Personal Library",
+      "properties": {
+        "personalLibrary.booksPath": {
+          "type": "string",
+          "default": "books",
+          "description": "Path to books directory (relative to workspace or absolute)"
+        },
+        "personalLibrary.pythonPath": {
+          "type": "string",
+          "default": "python3",
+          "description": "Python interpreter path (e.g., /opt/homebrew/bin/python3.11 or python3)"
+        }
+      }
+    }
+  },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",

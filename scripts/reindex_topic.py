@@ -48,22 +48,8 @@ def reindex_topic(topic_id: str):
         return False
 
     topic_label = topic_data['label']
-
-    # Handle nested topics (e.g., cybersecurity_strategy → cybersecurity/strategy/)
-    # AND root topics with underscores (e.g., product_architecture → product architecture/)
-    if '_' in topic_id:
-        # Check if it's a nested topic (has corresponding subfolder)
-        parts = topic_id.split('_')
-        nested_path = BOOKS_DIR / '/'.join(parts)
-
-        # Try nested path first, fall back to label with spaces
-        if nested_path.exists():
-            topic_dir = nested_path
-        else:
-            # Not nested - use label (which may have spaces)
-            topic_dir = BOOKS_DIR / topic_label
-    else:
-        topic_dir = BOOKS_DIR / topic_label
+    folder_path = topic_data.get('folder_path', topic_label)
+    topic_dir = BOOKS_DIR / folder_path
 
     print(f"📚 Reindexing topic: {topic_label}")
 

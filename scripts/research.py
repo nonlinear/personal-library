@@ -32,21 +32,17 @@ def load_metadata():
 
 def load_topic(topic_id):
     """Load FAISS index + chunks for a topic."""
-    # Handle nested topics (e.g., cybersecurity_strategy → cybersecurity/strategy/)
-    if '_' in topic_id:
-        parts = topic_id.split('_')
-        topic_dir = BOOKS_DIR / '/'.join(parts)
-    else:
-        # Find topic folder by matching topic_id to metadata
-        metadata = load_metadata()
-        topic_label = None
-        for topic in metadata['topics']:
-            if topic['id'] == topic_id:
-                topic_label = topic['label']
-                break
-        if not topic_label:
-            return None
-        topic_dir = BOOKS_DIR / topic_label
+    # Get folder path from metadata
+    metadata = load_metadata()
+    folder_path = None
+    for topic in metadata['topics']:
+        if topic['id'] == topic_id:
+            folder_path = topic.get('folder_path', topic['label'])
+            break
+    if not folder_path:
+        return None
+
+    topic_dir = BOOKS_DIR / folder_path
 
     faiss_file = topic_dir / "faiss.index"
     chunks_file = topic_dir / "chunks.pkl"
@@ -79,7 +75,7 @@ def query_library(query, topic=None, k=5):
     if not topic_id:
         # Default to first topic with data
         for t in metadata['topics']:
-            topic_dir = STORAGE_DIR / t['id']
+            topic_dir = BOOKS_DIR / t['id']
             if (topic_dir / "faiss.index").exists():
                 topic_id = t['id']
                 break

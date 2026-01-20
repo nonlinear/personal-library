@@ -1,17 +1,8 @@
 {
   "simpleBrowser.focusLockIndicator": true,
   "simpleBrowser.hideDefaultMenuBar": false,
-  "chat.mcp.servers": {
-    "personal-library": {
-      "command": "/opt/homebrew/bin/python3.11",
-      "args": ["/Users/nfrota/Documents/personal library/scripts/mcp_server.py"],
-      "description": "Personal book library RAG - local BYOB system with lazy loading",
-      "enabled": true,
-      "env": {
-        "SENTENCE_TRANSFORMERS_HOME": "/Users/nfrota/Documents/personal library/models"
-      }
-    }
-  },
+  "personalLibrary.pythonPath": "/opt/homebrew/bin/python3.11",
+  "personalLibrary.booksPath": "books",
   "workbench.colorCustomizations": {
     "[Default Light+]": {
       "sideBar.background": "#fff3e0",
