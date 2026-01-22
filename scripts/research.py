@@ -45,14 +45,14 @@ def load_topic(topic_id):
     topic_dir = BOOKS_DIR / folder_path
 
     faiss_file = topic_dir / "faiss.index"
-    chunks_file = topic_dir / "chunks.pkl"
+    chunks_file_json = topic_dir / "chunks.json"
 
-    if not faiss_file.exists() or not chunks_file.exists():
+    if not faiss_file.exists() or not chunks_file_json.exists():
         return None
 
     index = faiss.read_index(str(faiss_file))
-    with open(chunks_file, 'rb') as f:
-        chunks = pickle.load(f)
+    with open(chunks_file_json, 'r', encoding='utf-8') as f:
+        chunks = json.load(f)
 
     return {'index': index, 'chunks': chunks}
 
@@ -95,16 +95,40 @@ def query_library(query, topic=None, k=5):
         k
     )
 
-    # Format results
+    # Build book_id → (filename, folder_path) map for this topic
+    topic_meta = None
+    for t in metadata['topics']:
+        if t['id'] == topic_id:
+            topic_meta = t
+            break
+    book_id_to_file = {}
+    if topic_meta:
+        for b in topic_meta.get('books', []):
+            book_id_to_file[b['id']] = {
+                'filename': b['filename'],
+                'folder_path': topic_meta.get('folder_path', topic_meta['label'])
+            }
+
+    # Format results with filename and relative path
     results = []
     for idx, dist in zip(indices[0], distances[0]):
         if idx < len(topic_data['chunks']):
             chunk = topic_data['chunks'][idx]
+            book_id = chunk.get('book_id')
+            file_info = book_id_to_file.get(book_id, {})
+            filename = file_info.get('filename', '')
+            folder_path = file_info.get('folder_path', '')
+            # Compute relative path from workspace root to book file
+            # (Assume cwd is workspace root)
+            rel_path = os.path.join('books', folder_path, filename) if filename and folder_path else ''
             results.append({
-                'text': chunk['text'],
+                'text': chunk.get('chunk_full', ''),
                 'book_title': chunk.get('book_title', ''),
                 'topic': topic_id,
-                'similarity': float(1 - dist)  # Convert distance to similarity
+                'similarity': float(1 - dist),  # Convert distance to similarity
+                'filename': filename,
+                'folder_path': folder_path,
+                'relative_path': rel_path
             })
 
     return results

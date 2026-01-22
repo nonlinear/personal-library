@@ -142,39 +142,28 @@ Pass: ✅ Nested topics work
 
 **Run these tests BEFORE every commit to main:**
 
-### 1. Server Startup Test
+### 1. Research Pipeline Validation (MANDATORY)
+
+**This is the only required test for MCP research functionality.**
+
+For each of the following sample queries (using real topics/books from metadata.json), run:
 
 ```bash
-# Test 1: MCP server starts quickly
-python3.11 scripts/mcp_server_lazy.py
-# Expected: "Personal Library MCP Server ready" in <1s
-# Ctrl+C to stop
-
-# Test 2: Check for errors in logs
-# Expected: No tracebacks, no "ERROR:" messages
+# Test 1: Research pipeline returns valid results for real topics
+python3.11 scripts/research.py "What is the main argument?" --topic ai_policy --top-k 1
+python3.11 scripts/research.py "Who is Martin Ford?" --topic ai_prompt_engineering --top-k 1
+python3.11 scripts/research.py "What is UX in AI?" --topic ai_theory --top-k 1
 ```
 
-**Pass criteria:** ✅ Starts in <1s, no errors
+**Expected:** Each command returns a valid JSON object with at least one result (results[].text is non-empty).
+
+**Pass criteria:** ✅ All queries succeed, return valid JSON, and results are non-empty.
+
+If any query fails, MCP is considered broken for its primary use case.
 
 ---
 
-### 2. Core Functionality Test
-
-```bash
-# Test 3: Query library (if running outside MCP)
-python3.11 scripts/query.py "What is the panopticon?"
-# Expected: Returns relevant passages from books
-
-# OR use VS Code MCP integration:
-# Open VS Code → use /research prompt → query library
-# Expected: MCP responds with book citations
-```
-
-**Pass criteria:** ✅ Returns relevant results, no crashes
-
----
-
-### 3. Indexing Test
+### 2. Indexing Test
 
 ```bash
 # Test 4: Generate metadata
@@ -191,7 +180,7 @@ python3.11 scripts/reindex_topic.py "AI"
 
 ---
 
-### 3.1. Happy Path Test (Path Resolution)
+### 2.1. Happy Path Test (Path Resolution)
 
 **Question:** If a user follows README.md happy path, will path resolution work for:
 
@@ -254,7 +243,7 @@ python3.11 scripts/indexer.py 2>&1 | grep -E "✓ Loaded|⚠️  Not found" | he
 
 ---
 
-### 4. Environment Check
+### 3. Environment Check
 
 ```bash
 # Test 6: Check dependencies
@@ -270,7 +259,7 @@ ls books/*/chunks.json  # Should show topic-based chunks
 
 ---
 
-### 5. Memory & Performance Check
+### 4. Memory & Performance Check
 
 ```bash
 # Test 8: Monitor memory during reindex (optional, for large libraries)
@@ -447,7 +436,7 @@ grep -ri "TODO\|FIXME\|XXX\|lorem ipsum\|placeholder" README.md CHANGELOG.md ROA
 
 ---
 
-### 6. README.md Accuracy Check
+### 5. README.md Accuracy Check
 
 ```bash
 # Verify Python version mentioned matches requirement
@@ -468,7 +457,7 @@ echo "📋 Manual check: Test Quick Start commands from README.md"
 
 ---
 
-### 7. setup.sh Change Detection
+### 6. setup.sh Change Detection
 
 ```bash
 # Compare committed vs current setup.sh

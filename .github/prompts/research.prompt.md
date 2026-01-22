@@ -1,3 +1,38 @@
+# ⚠️ CRITICAL: No MCP, No Answer
+
+If MCP (research.py) cannot be run, the ONLY valid response is to inform the user of the error and STOP.
+Never attempt to answer, summarize, or speculate. Any answer not directly grounded in MCP output is misleading and strictly forbidden.
+It is always better to say “error” and stop than to provide an ungrounded or unverified answer.
+Do not attempt to be helpful by guessing, summarizing, or using fallback knowledge. Silence is better than misleading.
+
+# 🚨 MCP Research Prompt Standard
+
+The ONLY valid responses to a research prompt are:
+
+1. **Context error:** Ask the user for clarification if topic/book cannot be determined.
+2. **Engine error:** Inform the user of a technical/library/MCP failure. Do NOT answer from general knowledge.
+3. **Success:** Return grounded results from MCP (even if “no relevant info found”), with proper citations.
+
+Every research prompt MUST trigger research.py and use its output. If context is ambiguous, ask for clarification. If MCP/research.py fails, report the error and refuse to answer. If successful, format answer as specified (emoji, sources, etc).
+
+Possible additional permutations to consider:
+
+- **Partial results:** Some books/topics return results, others fail (should be treated as “success” with gaps acknowledged).
+- **Permission error:** User lacks access to a book/topic (future multi-user setups).
+- **Timeout:** MCP takes too long to respond (should be reported as engine error).
+
+Enumerated engine errors for future granularity:
+
+- Python not installed or wrong version
+- research.py missing or not executable
+- metadata.json missing or corrupted
+- faiss.index missing or corrupted
+- Model not downloaded
+- MCP internal exception (traceback)
+- Timeout (query takes too long)
+- Permission/access error (future-proofing)
+- Disk full or IO error
+
 # Personal Library Research Prompt
 
 **Purpose:** Answer questions by searching your indexed personal book library.
@@ -73,11 +108,18 @@ python3.11 -c "import json; topics = json.load(open('/Users/nfrota/Documents/per
 
 ## Operating Rules (Critical)
 
-- **research.py is the ONLY source** of book content
-- **Do NOT answer from general knowledge** when book search is required
-- **Do NOT invent** citations, quotes, or sources
-- **If search returns no relevant material**, say so explicitly
-- **If unsure about scope**, ask user for clarification first
+- **research.py is the ONLY source** of book content. Every research prompt MUST trigger research.py and use its output.
+- **If research.py cannot run, or the library is inaccessible, the assistant MUST clearly communicate this to the user and refuse to answer.**
+- **Never answer from general knowledge, fallback, or memory if research.py cannot be used.**
+- **Do NOT invent** citations, quotes, or sources.
+- **If search returns no relevant material**, say so explicitly (e.g., "No relevant information found in your library.").
+- **If unsure about scope**, ask user for clarification first.
+
+**The only possible answer types are:**
+
+- **Context error:** Ask for clarification if topic/book cannot be determined.
+- **Engine error:** Report MCP/library failure, refuse to answer from general knowledge.
+- **Success:** Return grounded results from MCP, with proper citations (even if no relevant info found).
 
 ---
 
@@ -98,25 +140,25 @@ test -f "/Users/nfrota/Documents/personal library/books/metadata.json" && echo "
 - ✅ **Output = "LIBRARY_FOUND"**: Proceed to 🚧 2 of 6
 - ❌ **Output = "LIBRARY_NOT_FOUND"**: STOP IMMEDIATELY
 
-**If library not found, respond EXACTLY:**
+**If research.py cannot run, or the library is not accessible, respond EXACTLY:**
 
 ```
-❌ Personal Library not accessible.
+❌ Personal Library not accessible or research pipeline unavailable.
 
 Expected location: /Users/nfrota/Documents/personal library/books/metadata.json
 
 Possible fixes:
 1. Verify the library exists at the expected path
 2. Update the library path in this prompt's configuration section
-3. Ask your question without `/research` for general knowledge
+3. Run `bash ./scripts/setup.sh` to set up your environment
 
-I cannot answer research questions without library access.
+I cannot answer research questions without access to your library and a working research pipeline. No general knowledge or fallback answers will be provided.
 ```
 
 **DO NOT:**
 
 - Answer from general knowledge
-- Provide architectural suggestions
+- Provide fallback, memory, or architectural suggestions
 - Give alternative solutions
 - Continue with the research workflow
 
@@ -275,78 +317,32 @@ According to DeLanda 1️⃣, gradients drive morphogenesis. This connects to De
 
 ### 🚧 Final: Citation Format (CRITICAL)
 
-- **MUST get exact filename from `metadata.json`** before creating citation
-- Wrong filename = broken link = n
-  o pill in VS Code
-- The metadata.json MUST contain exact filenames or absolute paths
+**ALL citations MUST use the following format, referencing ONLY the fields returned by research.py:**
 
-**Path calculation:**
-
-- VS Code's link pill validation is VERY strict to prevent spoofing
-- **Step 1:** Read metadata from MCP server to get:
-  1.  Exact `filename` for each book (e.g., `"Debt - David Graeber.epub"`)
-  2.  `library_path` field (e.g., `"/Users/nfrota/Documents/personal library"`)
-  3.  Topic `folder_path` (e.g., `"AI/theory"` or `"system_theory"`)
-- **Step 2:** Get current workspace absolute path (use VS Code API or `os.getcwd()`)
-- **Step 3:** Calculate relative path from workspace to library:
-  ```python
-  import os
-  relative_to_library = os.path.relpath(library_path, workspace_path)
-  ```
-- **Step 4:** Construct: `{relative_to_library}/books/{folder_path}/{filename}`
-- **Step 5:** URL-encode spaces and special characters (`%20`, `%3A`, `%27`, etc.)
-
-**CRITICAL:** Use **relative paths** calculated from absolutes. VS Code pills require workspace-relative paths for phishing protection.
-
-2. **Search query format**: Indented plain text (4 spaces)
-   - EXACTLY 4 consecutive words from the chunk
-   - Words must appear in SAME ORDER in book
-   - NO quotes (just the phrase itself)
-   - Indented with 4 spaces for code block formatting
-
-## Step 5 — Citation Format (CRITICAL)
-
-**File path format**: Markdown link with URL-encoded workspace-relative path
-
-- Format: `[Book Title.epub]({workspace_relative_path})`
-- Display text: Book title WITH .epub extension
-- Link URL: **Relative path from current workspace** (calculated from absolutes)
-- **MUST use URL encoding**: spaces as `%20`, `:` as `%3A`, `%27` etc.
-
-**Search snippet format**: Indented plain text (4 spaces)
-
-- EXACTLY 4 consecutive words from chunk
-- Words in SAME ORDER as in book
-- NO quotes (just the phrase itself)
-- For Cmd+F finding in VS Code
-
-**Path calculation:**
-
-1. Read `/Users/nfrota/Documents/personal library/books/metadata.json` to get:
-   - Exact `filename` for the book
-   - `folder_path` from the topic entry (e.g., `"AI/theory"`)
-   - `library_path` (e.g., `"/Users/nfrota/Documents/personal library"`)
-2. Get current workspace path (e.g., `/Users/nfrota/Documents/nonlinear`)
-3. Calculate relative path:
-   ```python
-   import os
-   relative = os.path.relpath(
-       "/Users/nfrota/Documents/personal library",
-       "/Users/nfrota/Documents/nonlinear"
-   )
-   # Returns: "../personal library"
-   ```
-4. Construct: `{relative}/books/{folder_path}/{filename}`
-5. URL-encode: spaces→`%20`, etc.
+- `[filename+extension](relative_path)`
+  - `filename+extension` is the exact filename (e.g., `Molecular Red.epub`) as returned by research.py (`filename` field)
+  - `relative_path` is the workspace-relative, URL-encoded path to the file as returned by research.py (`relative_path` field)
+  - **NO other citation format is valid.**
+  - This is required for VS Code pill validation and anti-phishing.
 
 **Example:**
 
-- Workspace: `/Users/nfrota/Documents/nonlinear`
-- Library: `/Users/nfrota/Documents/personal library`
-- Relative: `../personal library`
-- Topic folder: `AI/theory`
-- Filename: `Superintelligence.epub`
-- Result: `../personal%20library/books/AI/theory/Superintelligence.epub`
+1️⃣ [Molecular Red.epub](../personal%20library/books/anthropocene/Molecular%20Red.epub)
+
+    Mars socialist utopia collective
+
+**Rules:**
+
+- You MUST use the `filename` and `relative_path` fields from research.py output for every citation.
+- Do NOT attempt to reconstruct or guess the path; only use what is returned.
+- If research.py does not return these fields, treat as an engine error and STOP.
+- Do NOT use book_title or any other field for pill generation.
+- All citations must be pill-compatible for VS Code validation.
+
+**Search snippet format:**
+
+- Indented plain text (4 spaces)
+- EXACTLY 4 consecutive words from the chunk, in order, no quotes
 
 **Never:**
 

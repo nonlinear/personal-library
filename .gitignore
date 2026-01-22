@@ -16,6 +16,7 @@ engine/docs/FAILED.md
 # GitHub workflows/scripts (except research prompt)
 .github/
 !.github/prompts/research.prompt.md
+!.github/prompts/whatsup.prompt.md
 
 # Storage (deprecated - now inside books/)
 storage/

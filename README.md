@@ -19,9 +19,8 @@
 
 ---
 
-- **✅ Done** / [Meta-Workflow Infrastructure](engine/docs/CHANGELOG.md#v03) / _Established workflow infrastructure for epic-based development_
-- **🚧 Next** / [Delta indexing](engine/docs/ROADMAP.md#v04) / _More optimized reindexing_
-- [View changelog](engine/docs/CHANGELOG.md) / [View roadmap](engine/docs/ROADMAP.md) / [Join signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8)
+**✅ Done** / [Epic-per-branch workflow](engine/docs/CHANGELOG.md#v0.11) / _Branch-based development for each roadmap epic_
+**🚧 Next** / [Delta indexing](engine/docs/ROADMAP.md#v0.2) / _More optimized reindexing_
 
 ---
 
