@@ -1,29 +1,46 @@
 # Personal Library MCP - Changelog
 
-> 🤖
->
-> - [CHANGELOG](CHANGELOG.md) - What we did
-> - [ROADMAP](ROADMAP.md) - What we wanna do
-> - [CONTRIBUTING](../../.github/CONTRIBUTING.md) - How we do it
-> - [CHECKS](CHECKS.md) - What we accept
-> - [/whatsup](../../.github/prompts/whatsup.prompt.md) - The prompt that keeps us sane
->
-> 🤖
+# Epic Syntax Reference
 
----
+Each roadmap epic uses the following format:
 
-### v0.3
+## v0.x
 
-#### ✅ Meta-Workflow Infrastructure
+### EPIC TITLE
+
+Short description
+
+- [ ] Task 1
+- [ ] Task 2
+      ...etc
+
+## v0.3b
+
+### Epic-per-branch workflow
+
+Branch-based development for each roadmap epic.
+
+- [x] Enforce: Each ROADMAP epic = dedicated feature branch
+- [x] Branch naming: `v{major}.{minor}-{epic-name}` (e.g., `v0.3-delta-indexing`)
+- [x] Workflow: Regular rebase from `main` to stay current
+- [x] Completion criteria: Merge to `main` = move ROADMAP section → CHANGELOG
+- [x] Add git hooks or CI checks to validate workflow compliance
+- [x] Update whatsup.prompt.md to handle feature branch workflow
+- [x] Document branch-based development in contributing guide
+- **Note:** Current workflow is direct commits to `main` (works for now)
+
+## v0.3
+
+### ✅ Meta-Workflow Infrastructure
 
 Established workflow infrastructure for epic-based development
 
 ✅ Always copy navigation block from README to status files
 🗒️ Originally planned as "Delta Indexing" but pivoted to meta-workflow. Delta automation deferred.
 
-### v0.2.6
+## v0.2.6
 
-#### ✅ Library cleanup
+### ✅ Library cleanup
 
 fixing subtopics as flat ones
 
@@ -37,9 +54,9 @@ fixing subtopics as flat ones
 
 **🔧 Migration:** None - just a bug fix
 
-### v0.2.5
+## v0.2.5
 
-#### ✅ Path Resolution & Platform-Agnostic Prompt
+### ✅ Path Resolution & Platform-Agnostic Prompt
 
 **👥 Who needs to know:** Users with subtopics (AI/theory) or folder names with spaces (product architecture)
 
@@ -69,9 +86,9 @@ fixing subtopics as flat ones
 
 **Example fixes:**
 
-### v0.2.4
+## v0.2.4
 
-#### ✅ Critical Chunking Bug Fix
+### ✅ Critical Chunking Bug Fix
 
 **👥 Who needs to know:** ALL USERS - this fix improves search quality 400x
 
@@ -97,9 +114,9 @@ fixing subtopics as flat ones
 
 **Discovered during:** NAS books reorganization + chunking diagnostics
 
-### v0.2.3
+## v0.2.3
 
-#### ✅ Critical Bug Fixes
+### ✅ Critical Bug Fixes
 
 **👥 Who needs to know:**
 
@@ -144,9 +161,9 @@ python3.11 scripts/reindex_topic.py <topic-name>
 
 **Impact:** Correct indexing for all topic types, dramatically improved search quality
 
-### v0.2.2
+## v0.2.2
 
-#### ✅ Failed Books Tracking
+### ✅ Failed Books Tracking
 
 **👥 Who needs to know:**
 
@@ -160,9 +177,9 @@ python3.11 scripts/reindex_topic.py <topic-name>
 
 **🔧 Migration:** None (automatic on next index run)
 
-### v0.2.1
+## v0.2.1
 
-#### ✅ Infrastructure Improvements
+### ✅ Infrastructure Improvements
 
 **👥 Who needs to know:**
 
@@ -176,9 +193,9 @@ python3.11 scripts/reindex_topic.py <topic-name>
 
 **🔧 Migration:** None (documentation/tooling only)
 
-### v0.2
+## v0.2
 
-#### ✅ PDF Support + Integrated Reindexing
+### ✅ PDF Support + Integrated Reindexing
 
 **👥 Who needs to know:**
 
@@ -206,9 +223,9 @@ python3.11 scripts/reindex_topic.py <topic-name>
 
 **🔧 Migration:** None (backward compatible)
 
-### v0.1
+## v0.1
 
-#### ✅ Database Optimization
+### ✅ Database Optimization
 
 **👥 Who needs to know:**
 
@@ -233,7 +250,7 @@ python3.11 scripts/reindex_topic.py <topic-name>
 
 ### Foundation
 
-#### ✅ Initial Release
+### ✅ Initial Release
 
 **Core infrastructure for Personal Library MCP**
 
@@ -242,3 +259,14 @@ python3.11 scripts/reindex_topic.py <topic-name>
 - [x] Fully offline operation
 
 **Impact:** Full local MCP infrastructure for book queries
+
+> 🤖
+>
+> - [README](./README.md) - Our project
+> - [CHANGELOG](./engine/docs/CHANGELOG.md) — What we did
+> - [ROADMAP](./engine/docs/ROADMAP.md) — What we wanna do
+> - [CONTRIBUTING](./engine/docs/CONTRIBUTING.md) — How we do it
+> - [CHECKS](./engine/docs/CHECKS.md) — What we accept
+> - [/whatsup](./.github/prompts/whatsup.prompt.md) — The prompt that keeps us sane
+>
+> 🤖
