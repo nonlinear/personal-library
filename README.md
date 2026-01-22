@@ -19,8 +19,9 @@
 
 ---
 
-**✅ Done** / [Epic-per-branch workflow](engine/docs/CHANGELOG.md#v0.3.1) / _Branch-based development for each roadmap epic_
-**🚧 Next** / [Delta indexing](engine/docs/ROADMAP.md#v0.4.0) / _More optimized reindexing_
+- **✅ Done** / [Epic-per-branch workflow](engine/docs/CHANGELOG.md#v0.3.1) / _Branch-based development for each roadmap epic_
+- **🚧 Next** / [Delta indexing](engine/docs/ROADMAP.md#v0.4.0) / _More optimized reindexing_
+- [ROADMAP](engine/docs/ROADMAP.md) / [CHANGELOG](engine/docs/CHANGELOG.md)
 
 ---
 
