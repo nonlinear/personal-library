@@ -5,7 +5,22 @@
       {
         "text": "🤖 CRITICAL: Always look for '🤖:' markers in markdown files - they contain navigation instructions to status files (ROADMAP, CHANGELOG, CHECKS, whatsup.prompt.md). When you see '🤖:', treat it as a direct command to check that file before proceeding."
       }
-    ]
+    ],
+    "files.exclude": {
+      "**/*.pkl": true,
+      "**/*.index": true,
+      "books/metadata.json": true,
+      "models/": true,
+      "**/__pycache__": true,
+      "**/.DS_Store": true,
+      "engine/docs/FAILED.md": true
+    },
+    "search.exclude": {
+      "**/*.pkl": true,
+      "**/*.index": true,
+      "models/": true,
+      "**/__pycache__": true
+    }
   },
   "folders": [
     {
