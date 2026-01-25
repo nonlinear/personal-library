@@ -2,8 +2,9 @@
 # Most patterns moved to .git/info/exclude per gaps/gitignore-vs-autocomplete.md
 # Only shared metadata/indices here to avoid autocomplete blocking
 
-# Books folder - ignore everything inside
-books/**
+# Books folder - ignore everything inside except .gitkeep
+books/*
+!books/.gitkeep
 
 # Failed books log (contains PII)
 engine/docs/FAILED.md
