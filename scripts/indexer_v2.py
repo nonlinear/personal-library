@@ -19,7 +19,9 @@ from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, StorageContext, Settings, Document
+from llama_index.core.node_parser import SentenceSplitter
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+from llama_index.readers.file import EpubReader, PyMuPDFReader
 
 # PDF/EPUB processing
 try:
@@ -50,9 +52,16 @@ Settings.embed_model = embed_model
 Settings.chunk_size = 1024
 Settings.chunk_overlap = 200
 
+# Node parser for chunking raw documents
+node_parser = SentenceSplitter(chunk_size=1024, chunk_overlap=200)
+
 # Paths
 LIBRARY_ROOT = Path(__file__).parent.parent / "books"
 MAIN_METADATA = LIBRARY_ROOT / "library-index.json"
+
+# Readers
+epub_reader = EpubReader()
+pdf_reader = PyMuPDFReader()
 
 
 def extract_pdf_paragraphs(pdf_path: Path) -> List[Tuple[str, int, int]]:
@@ -274,9 +283,8 @@ def index_topic(topic_data: Dict, registry: Dict, force: bool = False) -> bool:
         else:
             print(f"   🆕 First indexing (no hash stored)")
 
-    # 2. Load all documents
-    all_documents = []
-    all_chunks_metadata = []
+    # 2. Load all raw documents
+    raw_documents = []
     failed_books = []
 
     for book in topic_meta['books']:
@@ -290,19 +298,33 @@ def index_topic(topic_data: Dict, registry: Dict, force: bool = False) -> bool:
             })
             continue
 
-        print(f"      Loading: {book['title']} ({book['filetype']})")
+        print(f"      Loading: {book['title']}")
 
         try:
-            docs, chunks = load_book_with_metadata(
-                book_path,
-                book,
-                topic_id,
-                topic_meta.get('topic_label', topic_id)
-            )
+            # Detect file type and load
+            file_ext = book_path.suffix.lower()
 
-            all_documents.extend(docs)
-            all_chunks_metadata.extend(chunks)
-            print(f"         ✓ {len(docs)} paragraphs")
+            if file_ext == '.epub':
+                docs = epub_reader.load_data(str(book_path))
+            elif file_ext == '.pdf':
+                docs = pdf_reader.load_data(str(book_path))
+            else:
+                print(f"         ⚠️  Unsupported: {file_ext}")
+                continue
+
+            # Add metadata to raw documents
+            for doc in docs:
+                doc.metadata = {
+                    'book_id': book['id'],
+                    'book_title': book['title'],
+                    'book_author': book.get('author', 'Unknown'),
+                    'topic_id': topic_id,
+                    'topic_folder': topic_data['path'],
+                    'tags': ','.join(book.get('tags', []))
+                }
+
+            raw_documents.extend(docs)
+            print(f"         ✓ {len(docs)} raw docs")
 
         except Exception as e:
             print(f"         ❌ Error: {e}")
@@ -311,40 +333,73 @@ def index_topic(topic_data: Dict, registry: Dict, force: bool = False) -> bool:
                 'error': str(e)
             })
 
-    if not all_documents:
+    if not raw_documents:
         print(f"   ❌ No documents loaded")
         return False
 
-    print(f"\n   Total: {len(all_documents)} paragraphs")
+    # 3. Apply chunking to raw documents
+    print(f"\n   ✂️  Chunking {len(raw_documents)} raw docs...")
+    nodes = node_parser.get_nodes_from_documents(raw_documents)
+    print(f"   📝 Generated {len(nodes)} chunks")
 
-    # 3. Build vector index
-    print(f"\n   🔨 Building vector index...")
+    if not nodes:
+        print(f"   ❌ No chunks generated")
+        return False
+
+    # 4. Build embeddings manually (no VectorStoreIndex needed)
+    print(f"\n   🔨 Generating embeddings...")
 
     try:
-        index = VectorStoreIndex.from_documents(all_documents, show_progress=True)
-        print(f"      ✓ Index built")
+        import numpy as np
+        import faiss
+        from sentence_transformers import SentenceTransformer
+
+        # Use same model as Settings
+        model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2', cache_folder=str(MODELS_DIR))
+
+        texts = [node.text for node in nodes]
+        embeddings_list = model.encode(texts, show_progress_bar=True, batch_size=32)
+        print(f"      ✓ Embeddings generated")
     except Exception as e:
         print(f"      ❌ Indexing failed: {e}")
         return False
 
-    # 4. Save to topic folder
+    # 5. Save to topic folder
     print(f"\n   💾 Saving...")
 
-    # Save vector index
+    # Build and save FAISS index
     faiss_path = topic_path / "faiss.index"
     try:
-        index.storage_context.persist(persist_dir=str(topic_path))
+        embeddings_array = np.array(embeddings_list, dtype=np.float32)
+        dimension = embeddings_array.shape[1]
+
+        faiss_index = faiss.IndexFlatL2(dimension)
+        faiss_index.add(embeddings_array)
+
+        faiss.write_index(faiss_index, str(faiss_path))
         print(f"      ✓ {faiss_path.name}")
     except Exception as e:
         print(f"      ❌ Failed to save index: {e}")
         return False
 
-    # Save chunks.json v2.0
+    # Save chunks.json
     chunks_file = topic_path / "chunks.json"
+    chunks_list = []
+    for i, node in enumerate(nodes):
+        chunks_list.append({
+            'chunk_full': node.text,
+            'book_id': node.metadata.get('book_id'),
+            'book_title': node.metadata.get('book_title'),
+            'book_author': node.metadata.get('book_author'),
+            'topic_id': node.metadata.get('topic_id'),
+            'topic_folder': node.metadata.get('topic_folder'),
+            'chunk_index': i
+        })
+
     try:
-        with open(chunks_file, 'w') as f:
-            json.dump(all_chunks_metadata, f, indent=2)
-        print(f"      ✓ {chunks_file.name} ({len(all_chunks_metadata)} chunks)")
+        with open(chunks_file, 'w', encoding='utf-8') as f:
+            json.dump(chunks_list, f, ensure_ascii=False, indent=2)
+        print(f"      ✓ {chunks_file.name} ({len(chunks_list)} chunks)")
     except Exception as e:
         print(f"      ❌ Failed to save chunks: {e}")
         return False
@@ -372,6 +427,8 @@ def main():
     parser = argparse.ArgumentParser(description='Index books with v2.0 metadata')
     parser.add_argument('topics', nargs='*', help='Topic IDs to index')
     parser.add_argument('--all', action='store_true', help='Index all topics')
+    parser.add_argument('--topic', help='Index specific topic (e.g., theory/anthropocene)')
+    parser.add_argument('--force', action='store_true', help='Force reindex (skip delta detection)')
     parser.add_argument('--topics', dest='topic_list', nargs='+', help='List of topic IDs')
 
     args = parser.parse_args()
@@ -395,6 +452,13 @@ def main():
     if args.all:
         topics_to_index = registry['topics']
         print(f"\n📋 Indexing all {len(topics_to_index)} topics")
+    elif args.topic:
+        # Single topic via --topic flag (supports paths like theory/anthropocene)
+        topics_to_index = [t for t in registry['topics'] if t['path'] == args.topic]
+        if not topics_to_index:
+            print(f"\n❌ Topic '{args.topic}' not found")
+            return 1
+        print(f"\n📋 Indexing topic: {args.topic}")
     elif args.topic_list:
         topic_ids = args.topic_list
         topics_to_index = [t for t in registry['topics'] if t['id'] in topic_ids]
@@ -406,9 +470,10 @@ def main():
     else:
         print(f"\n❌ No topics specified")
         print(f"💡 Usage:")
-        print(f"   python indexer.py cooking              # Index one topic")
-        print(f"   python indexer.py cooking ai_policy    # Index multiple")
-        print(f"   python indexer.py --all                # Index all")
+        print(f"   python indexer_v2.py --all                       # Index all (delta detection)")
+        print(f"   python indexer_v2.py --topic theory/anthropocene # Index one topic")
+        print(f"   python indexer_v2.py --force --all               # Force reindex all")
+        print(f"   python indexer_v2.py cooking ai_policy           # Index multiple topics")
         return 1
 
     # Index topics
@@ -418,7 +483,7 @@ def main():
     }
 
     for topic in topics_to_index:
-        success = index_topic(topic, registry, force=False)  # Delta detection enabled
+        success = index_topic(topic, registry, force=args.force)  # Use --force flag
         if success:
             results['success'].append(topic['id'])
         else:
