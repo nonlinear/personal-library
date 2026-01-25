@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Setup script for Personal Library MCP
+# Setup script for Librarian MCP
 # Supports: macOS, Linux, Windows (Git Bash/WSL)
 
 set -e
@@ -7,7 +7,7 @@ set -e
 # Get to repo root (parent of scripts/)
 cd "$(dirname "$0")/.."
 
-echo "🔧 Personal Library MCP - Setup"
+echo "🔧 Librarian MCP - Setup"
 echo "================================"
 echo ""
 

@@ -1,5 +1,30 @@
 # Librarian MCP - Changelog
 
+## v1.0.0
+
+### 🎯 Renaming: Personal Library → Librarian
+**Completed:** 2026-01-25
+
+**BREAKING CHANGES:** Complete rebranding from "Personal Library" to "Librarian"
+
+**Phase 1: Documentation & Code**
+- Renamed all docs (README, CHANGELOG, ROADMAP, CHECKS, mcp-setup)
+- Renamed all scripts (mcp_server.py, indexer_v2.py, watch_library.py)
+- Updated MCP server identifier: personal-library → librarian
+
+**Phase 2: Infrastructure**
+- Renamed local folder: personal library → librarian
+- Updated library_path in library-index.json
+
+**Phase 3: GitHub Repository**
+- Renamed GitHub repo: personal-library → librarian
+- Updated all documentation links
+- Updated remote URLs
+
+**Migration:** Update MCP config to use "librarian" instead of "personal-library"
+
+---
+
 ---
 
 ## v0.5.0
@@ -60,16 +85,17 @@ Architecture-first modular indexing with delta detection and target metadata for
 - ✅ 23× faster reindexing (delta detection)
 - ✅ Correct chunking (200+ chunks per book vs 1)
 
-**Migration:** 
+**Migration:**
 
 Run migration script to convert v1 metadata to v2:
+
 ```bash
 python3.11 scripts/migrate_to_v2.py
 ```
 
 Backup created automatically at `books/library-index.json.v1.backup`
 
-**Impact:** 
+**Impact:**
 
 Users with large libraries (50+ topics) see massive speedups. Reindexing only changed books instead of entire library.
 
@@ -79,7 +105,7 @@ Users with large libraries (50+ topics) see massive speedups. Reindexing only ch
 
 ### ✅ Epic Workflow Infrastructure | [notes](gaps/epic-notes/v0.4.0.md)
 
-[commit](https://github.com/nonlinear/personal-library/commit/467e8f6)
+[commit](https://github.com/nonlinear/librarian/commit/467e8f6)
 
 **Completed:** 2026-01-25
 
@@ -118,7 +144,7 @@ Deferred to v0.7.0 for workarounds and alternatives.
 
 ### Epic-per-branch workflow
 
-[commit](https://github.com/nonlinear/personal-library/commit/999717af9c9932299e690580c5bba5b3c201e47b)
+[commit](https://github.com/nonlinear/librarian/commit/999717af9c9932299e690580c5bba5b3c201e47b)
 
 Branch-based development for each roadmap epic.
 
@@ -137,7 +163,7 @@ Branch-based development for each roadmap epic.
 
 ### Meta-Workflow Infrastructure
 
-[commit](https://github.com/nonlinear/personal-library/commit/a5b5d23a6621da8fd51647c0b6135e2caf6d7fa7)
+[commit](https://github.com/nonlinear/librarian/commit/a5b5d23a6621da8fd51647c0b6135e2caf6d7fa7)
 
 Established workflow infrastructure for epic-based development
 
@@ -150,7 +176,7 @@ Established workflow infrastructure for epic-based development
 
 ### Library cleanup
 
-[commit](https://github.com/nonlinear/personal-library/commit/8c8c8fa1853e8e26b02ec5938b2d7b8709410687)
+[commit](https://github.com/nonlinear/librarian/commit/8c8c8fa1853e8e26b02ec5938b2d7b8709410687)
 
 fixing subtopics as flat ones
 
@@ -170,7 +196,7 @@ fixing subtopics as flat ones
 
 ### Path Resolution & Platform-Agnostic Prompt
 
-[commit](https://github.com/nonlinear/personal-library/commit/bc656194dd3da44fc84212481d82c0d75a26cd9e)
+[commit](https://github.com/nonlinear/librarian/commit/bc656194dd3da44fc84212481d82c0d75a26cd9e)
 
 **👥 Who needs to know:** Users with subtopics (AI/theory) or folder names with spaces (product architecture)
 
@@ -206,7 +232,7 @@ fixing subtopics as flat ones
 
 ### Critical Chunking Bug Fix
 
-[commit](https://github.com/nonlinear/personal-library/commit/7008ee14412eb840a25e2d90bd7e0ad3b3aa17a0)
+[commit](https://github.com/nonlinear/librarian/commit/7008ee14412eb840a25e2d90bd7e0ad3b3aa17a0)
 
 **👥 Who needs to know:** ALL USERS - this fix improves search quality 400x
 
@@ -238,7 +264,7 @@ fixing subtopics as flat ones
 
 ### Critical Bug Fixes
 
-[commit](https://github.com/nonlinear/personal-library/commit/005f7544c06b9f06ca59809edea6f4334bc3405e)
+[commit](https://github.com/nonlinear/librarian/commit/005f7544c06b9f06ca59809edea6f4334bc3405e)
 
 **👥 Who needs to know:**
 
@@ -289,7 +315,7 @@ python3.11 scripts/reindex_topic.py <topic-name>
 
 ### Failed Books Tracking
 
-[commit](https://github.com/nonlinear/personal-library/commit/3b8ebc82f3cfa3a8f91a18e6c8c8578cd4d46db8)
+[commit](https://github.com/nonlinear/librarian/commit/3b8ebc82f3cfa3a8f91a18e6c8c8578cd4d46db8)
 
 **👥 Who needs to know:**
 
@@ -309,7 +335,7 @@ python3.11 scripts/reindex_topic.py <topic-name>
 
 ### Infrastructure Improvements
 
-[commit](https://github.com/nonlinear/personal-library/commit/242b33733cc31b0a03e786e6f1ecda4c671038c7)
+[commit](https://github.com/nonlinear/librarian/commit/242b33733cc31b0a03e786e6f1ecda4c671038c7)
 
 **👥 Who needs to know:**
 
@@ -329,7 +355,7 @@ python3.11 scripts/reindex_topic.py <topic-name>
 
 ### PDF Support + Integrated Reindexing
 
-[commit](https://github.com/nonlinear/personal-library/commit/517420bf9b22bcb7d2b26186cd0ab251eb120e2)
+[commit](https://github.com/nonlinear/librarian/commit/517420bf9b22bcb7d2b26186cd0ab251eb120e2)
 
 **👥 Who needs to know:**
 
@@ -363,7 +389,7 @@ python3.11 scripts/reindex_topic.py <topic-name>
 
 ### Database Optimization
 
-[commit](https://github.com/nonlinear/personal-library/commit/418d98ef7a95fb0552b2486954f71367a9a2aab)
+[commit](https://github.com/nonlinear/librarian/commit/418d98ef7a95fb0552b2486954f71367a9a2aab)
 
 **👥 Who needs to know:**
 

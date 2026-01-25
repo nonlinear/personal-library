@@ -5,7 +5,6 @@
 MCP servers can be configured at two levels:
 
 1. **Global** (all VS Code workspaces)
-
    - File: `~/Library/Application Support/Code/User/settings.json` (macOS)
    - Affects all projects
 

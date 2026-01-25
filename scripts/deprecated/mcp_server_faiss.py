@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Personal Library MCP Server
+Librarian MCP Server
 
 A Model Context Protocol server that provides RAG retrieval from indexed books.
 The server is LLM-agnostic - it only returns chunks, the LLM (Claude/GPT/etc) generates responses.
@@ -296,12 +296,12 @@ async def handle_mcp_request(request: Dict) -> Dict:
 
 async def main():
     """MCP stdio server main loop."""
-    print("Personal Library MCP Server starting...", file=sys.stderr, flush=True)
+    print("Librarian MCP Server starting...", file=sys.stderr, flush=True)
 
     # Pre-load all resources on startup
     load_resources()
 
-    print("Personal Library MCP Server ready", file=sys.stderr, flush=True)
+    print("Librarian MCP Server ready", file=sys.stderr, flush=True)
 
     while True:
         try:

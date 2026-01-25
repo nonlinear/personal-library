@@ -1,5 +1,5 @@
 #!/bin/bash
-# Personal Library MCP - Automated Stability Checks
+# Librarian MCP - Automated Stability Checks
 
 echo "🔍 Running stability checks..."
 echo ""
