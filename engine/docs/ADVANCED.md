@@ -13,7 +13,7 @@ Main indexing script with delta detection.
 python3.11 scripts/indexer_v2.py --all
 
 # Index specific topic
-python3.11 scripts/indexer_v2.py --topic "AI/policy"
+python3.11 scripts/indexer_v2.py --topic "theory/anthropocene"
 
 # Force reindex (ignore hash-based delta detection)
 python3.11 scripts/indexer_v2.py --all --force
@@ -25,13 +25,15 @@ python3.11 scripts/indexer_v2.py --help
 
 **Flags:**
 
-- `--topic <name>`: Index single topic (e.g., "AI/policy", "plants")
+- `--topic <name>`: Index single topic (e.g., "AI/policy", "theory/anthropocene")
 - `--all`: Index all topics
 - `--force`: Skip delta detection, reindex everything
 - `--help`: Show usage information
 
 **Delta Detection:**
 Without `--force`, indexer only reindexes topics where files changed (using content hashes).
+
+⚠️ **Note:** `reindex_topic.py` is deprecated. Use `indexer_v2.py --topic "topic_name"` instead.
 
 ---
 
@@ -57,6 +59,62 @@ python3.11 scripts/watch_library.py --interval 30
 
 **Use Case:**
 Run in background while adding/editing books. Auto-reindexes changed topics.
+
+#### Run as LaunchAgent (macOS)
+
+Keep watchdog running even when VSCode is closed:
+
+```bash
+# Load the LaunchAgent (runs at login, auto-restarts)
+launchctl load ~/Library/LaunchAgents/com.librarian.watchdog.plist
+
+# Check status
+launchctl list | grep librarian
+
+# View logs
+tail -f ~/Documents/librarian/watchdog.log
+tail -f ~/Documents/librarian/watchdog.error.log
+
+# Stop watchdog
+launchctl unload ~/Library/LaunchAgents/com.librarian.watchdog.plist
+
+# Restart after code changes
+launchctl kickstart -k gui/$UID/com.librarian.watchdog
+```
+
+**Configuration:** [~/Library/LaunchAgents/com.librarian.watchdog.plist](file://~/Library/LaunchAgents/com.librarian.watchdog.plist)
+
+**Properties:**
+
+- `RunAtLoad`: Starts on login
+- `KeepAlive`: Auto-restarts if crashes
+- `ThrottleInterval`: 10s cooldown between restarts
+
+#### Verify Watchdog Indexed Books
+
+If you add books while VSCode is closed, check if watchdog auto-indexed:
+
+```bash
+# Check watchdog log for reindex activity
+tail -50 watchdog.log | grep -E "(📖|✅|❌)"
+
+# Check when topic was last indexed
+ls -lh books/theory/anthropocene/topic-index.json
+# Compare timestamp with book file timestamps
+
+# Quick check: compare topic-index.json vs book files
+find books/theory/anthropocene -name "*.epub" -o -name "*.pdf" -exec ls -lt {} + | head -1
+ls -lt books/theory/anthropocene/topic-index.json
+
+# If watchdog missed it, manually reindex
+python3.11 scripts/indexer_v2.py --topic "theory/anthropocene"
+```
+
+**What to look for in logs:**
+
+- `📖 Indexing: <topic>` - Watchdog detected change
+- `✅ Reindex completed` - Success
+- `❌ Reindex failed` - Check error
 
 ---
 

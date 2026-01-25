@@ -169,10 +169,10 @@ def main():
     observer.start()
 # Setup signal handler for graceful shutdown
     shutdown_flag = {'should_stop': False}
-    
+
     def signal_handler(signum, frame):
         shutdown_flag['should_stop'] = True
-    
+
     signal.signal(signal.SIGTERM, signal_handler)
     signal.signal(signal.SIGINT, signal_handler)
 
