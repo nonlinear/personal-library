@@ -539,6 +539,31 @@ Example: "Migrate first knowledge gap from epic notes"
 - [ ] Optional actions considered (project/mental health)
 
 Good to pause? 🌙
+
+---
+
+### Step 13: Close VS Code? (Optional)
+
+**Ask via terminal:**
+
+```
+Shutdown VS Code now? (y/n)
+```
+
+**If yes:**
+
+```bash
+# macOS
+osascript -e 'quit app "Visual Studio Code"'
+```
+
+**If no:**
+
+```
+✅ Wrap-up complete. VS Code stays open.
+```
+
+**Purpose:** Clean mental break, avoid "just one more thing" trap
 ```
 
 **ADHD-specific principles:**
