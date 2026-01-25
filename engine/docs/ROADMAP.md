@@ -3,6 +3,10 @@
 ```mermaid
 %%{init: {'theme':'base', 'themeVariables': { 'fontSize':'14px'}}}%%
 graph LR
+    subgraph "🚀 Active"
+        V1[v1.0.0<br/>Renaming<br/><small>Personal Library → Librarian</small>]
+    end
+
     subgraph "🎯 Ready"
         V5B[v0.5.1<br/>Hygiene]
         V5C[v0.5.2<br/>User Testing]
@@ -17,9 +21,11 @@ graph LR
         V8[v0.8.0<br/>FAILED→REPORT]
         V9[v0.9.0<br/>Error Handling]
         V10[v0.10.0<br/>Multi-User]
-        ADMIN[v1.0.0<br/>Admin Generalization<br/><small>Status files repo</small>]
+        ADMIN[v2.0.0<br/>Admin Generalization<br/><small>Status files repo</small>]
     end
 
+    V1 --> V5B
+    V1 --> V5C
     V5B --> V6
     V5C --> V6
     V6 --> V7
@@ -28,9 +34,54 @@ graph LR
     V9 --> V10
     V10 --> ADMIN
 
+    style V1 fill:#90EE90
     style V6 fill:#FFE4B5
     style ADMIN fill:#E6E6FA
 ```
+
+---
+
+## v1.0.0 - Renaming: Personal Library → Librarian 🚀
+
+**Status:** 🚧 In Progress (on main - no branch)
+
+**Goal:** Complete rebranding from "Personal Library" to "Librarian" across entire project.
+
+### Phase 1: Documentation & Code ✅ COMPLETE
+
+- [x] Rename all docs (README, CHANGELOG, ROADMAP, CHECKS, mcp-setup)
+- [x] Rename all scripts (mcp_server.py, indexer_v2.py, watch_library.py)
+- [x] Update MCP server identifier: `personal-library` → `librarian`
+- [x] Push to GitHub
+
+### Phase 2: Infrastructure (In Progress)
+
+- [ ] Rename local folder: `personal library` → `librarian`
+- [ ] Update library_path in library-index.json
+- [ ] Update all hardcoded paths in scripts
+- [ ] Test all scripts with new paths
+- [ ] Commit path updates
+
+### Phase 3: GitHub Repository
+
+- [ ] Rename GitHub repo: `personal-library` → `librarian`
+- [ ] Update remote URL in local git config
+- [ ] Update all documentation links to new repo URL
+- [ ] Test clone/pull from new URL
+
+### Phase 4: Version Renumbering
+
+After v1.0.0 is complete, renumber all versions:
+- v0.5.0 → v1.1.0 (Smart Indexing epic)
+- v0.5.1 → v1.1.1 (if exists)
+- v0.4.0 → v1.0.0 (initial stable release)
+- All future versions follow semantic versioning from v1.1.x onwards
+
+**Why v1.0.0 for renaming?**
+Major version bump signals breaking change:
+- BREAKING: MCP config must update `personal-library` → `librarian`
+- BREAKING: Folder paths changed
+- BREAKING: GitHub repo URL changed
 
 ---
 
