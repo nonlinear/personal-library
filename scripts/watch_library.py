@@ -16,6 +16,7 @@ Stop:
 
 import sys
 import time
+import signal
 import subprocess
 from pathlib import Path
 from watchdog.observers import Observer
@@ -166,16 +167,27 @@ def main():
     observer = Observer()
     observer.schedule(event_handler, str(LIBRARY_ROOT), recursive=True)
     observer.start()
+# Setup signal handler for graceful shutdown
+    shutdown_flag = {'should_stop': False}
+    
+    def signal_handler(signum, frame):
+        shutdown_flag['should_stop'] = True
+    
+    signal.signal(signal.SIGTERM, signal_handler)
+    signal.signal(signal.SIGINT, signal_handler)
 
     try:
-        while True:
+        # Keep running until signaled to stop
+        while not shutdown_flag['should_stop']:
             time.sleep(1)
     except KeyboardInterrupt:
-        print("\n\n⏹️  Stopping watcher...")
+        pass
+    finally:
+        print("\n\n⏹️  Stopping watcher...")t("\n\n⏹️  Stopping watcher...")
+    finally:
         observer.stop()
-
-    observer.join()
-    print("✅ Watcher stopped")
+        observer.join()
+        print("✅ Watcher stopped")
 
 
 if __name__ == "__main__":
