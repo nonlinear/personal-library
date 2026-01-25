@@ -42,7 +42,7 @@ All factual claims must be grounded in retrieved book chunks.
 
 ## Library Configuration
 
-**Absolute library path:** `/Users/nfrota/Documents/personal library`
+**Absolute library path:** `/Users/nfrota/Documents/librarian`
 
 Use this path for ALL commands regardless of current workspace.
 
@@ -50,13 +50,13 @@ Use this path for ALL commands regardless of current workspace.
 
 ## Metadata Structure (Read This First!)
 
-**Location:** `{library_path}/books/metadata.json`
+**Location:** `{library_path}/books/library-index.json`
 
 **Structure:**
 
 ```json
 {
-  "library_path": "/Users/nfrota/Documents/personal library",
+  "library_path": "/Users/nfrota/Documents/librarian",
   "topics": [
     {
       "id": "ai_theory",
@@ -77,13 +77,13 @@ Use this path for ALL commands regardless of current workspace.
 **Get library path (use this exact command):**
 
 ```bash
-python3.11 -c "import json; print(json.load(open('/Users/nfrota/Documents/personal library/books/metadata.json'))['library_path'])"
+python3.11 -c "import json; print(json.load(open('/Users/nfrota/Documents/librarian/books/library-index.json'))['library_path'])"
 ```
 
 **List all topic IDs (use this exact command):**
 
 ```bash
-python3.11 -c "import json; topics = json.load(open('/Users/nfrota/Documents/personal library/books/metadata.json'))['topics']; print('\n'.join(t['id'] for t in topics))"
+python3.11 -c "import json; topics = json.load(open('/Users/nfrota/Documents/librarian/books/library-index.json'))['topics']; print('\n'.join(t['id'] for t in topics))"
 ```
 
 ---
@@ -132,7 +132,7 @@ python3.11 -c "import json; topics = json.load(open('/Users/nfrota/Documents/per
 Execute this exact command:
 
 ```bash
-test -f "/Users/nfrota/Documents/personal library/books/metadata.json" && echo "LIBRARY_FOUND" || echo "LIBRARY_NOT_FOUND"
+test -f "/Users/nfrota/Documents/librarian/books/library-index.json" && echo "LIBRARY_FOUND" || echo "LIBRARY_NOT_FOUND"
 ```
 
 **Decision logic:**
@@ -143,9 +143,9 @@ test -f "/Users/nfrota/Documents/personal library/books/metadata.json" && echo "
 **If research.py cannot run, or the library is not accessible, respond EXACTLY:**
 
 ```
-❌ Personal Library not accessible or research pipeline unavailable.
+❌ Librarian not accessible or research pipeline unavailable.
 
-Expected location: /Users/nfrota/Documents/personal library/books/metadata.json
+Expected location: /Users/nfrota/Documents/librarian/books/library-index.json
 
 Possible fixes:
 1. Verify the library exists at the expected path
@@ -196,7 +196,7 @@ graph TD
 Execute this exact command:
 
 ```bash
-python3.11 -c "import json; print(json.load(open('/Users/nfrota/Documents/personal library/books/metadata.json'))['library_path'])"
+python3.11 -c "import json; print(json.load(open('/Users/nfrota/Documents/librarian/books/library-index.json'))['library_path'])"
 ```
 
 Store result as `LIBRARY_PATH` variable.
@@ -210,7 +210,7 @@ Store result as `LIBRARY_PATH` variable.
 Execute this exact command:
 
 ```bash
-python3.11 -c "import json; topics = json.load(open('/Users/nfrota/Documents/personal library/books/metadata.json'))['topics']; print('\n'.join(t['id'] for t in topics))"
+python3.11 -c "import json; topics = json.load(open('/Users/nfrota/Documents/librarian/books/library-index.json'))['topics']; print('\n'.join(t['id'] for t in topics))"
 ```
 
 ---
@@ -219,7 +219,7 @@ python3.11 -c "import json; topics = json.load(open('/Users/nfrota/Documents/per
 
 **If topic unclear, infer from metadata:**
 
-- Read `/Users/nfrota/Documents/personal library/books/metadata.json` for topic tags
+- Read `/Users/nfrota/Documents/librarian/books/library-index.json` for topic tags
 - Match query keywords against topic IDs, book titles, tags
 - Weighted scoring: tags 50%, topic ID 30%, labels 20%
 - ✅ Confidence ≥ 60%: Auto-select topic
@@ -235,7 +235,7 @@ python3.11 "{LIBRARY_PATH}/scripts/research.py" "{query}" --topic {topic_id} --t
 **Example:**
 
 ```bash
-python3.11 "/Users/nfrota/Documents/personal library/scripts/research.py" "security risks in contact apps" --topic cybersecurity_applied --top-k 5
+python3.11 "/Users/nfrota/Documents/librarian/scripts/research.py" "security risks in contact apps" --topic cybersecurity_applied --top-k 5
 ```
 
 **Parameters:**

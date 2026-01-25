@@ -155,39 +155,95 @@ Use for:
 cat ./engine/docs/CHANGELOG.md
 ```
 
-### Distributing the 🤖 Block
+### Distributing the 🤖 Block + Mermaid Roadmap
 
-**After reading README's 🤖 block, copy it to ALL status files:**
+**🚨 WHEN TO UPDATE: Every time you groom ROADMAP (add/complete/move epics) in CHECKS.md**
 
-```markdown
+**Process:**
+
+1. Update mermaid diagram in ROADMAP.md (source of truth)
+2. Copy updated diagram to README.md (at END, after 🤖 block)
+3. Copy 🤖 block + mermaid to ALL other status files (at TOP, after title)
+
+**🚨 CRITICAL: The mermaid roadmap diagram must be duplicated in ALL status files**
+
+**Placement rules:**
+
+- **README.md:** 🤖 block + mermaid at END (before final close)
+- **All others (CHANGELOG, ROADMAP, CONTRIBUTING, CHECKS):** 🤖 block + mermaid at TOP (right after # Title)
+
+**After reading README's 🤖 block, copy it + mermaid to ALL status files:**
+
+````markdown
 # In README.md (source of truth):
+
+# ... content ...
 
 > 🤖
 >
 > - [CHANGELOG](./engine/docs/CHANGELOG.md) — What we did
->   🤖
-
-# In engine/docs/CHANGELOG.md (adjusted paths):
-
-> 🤖
+> - [ROADMAP](./engine/docs/ROADMAP.md) — What we wanna do
+> - etc...
 >
-> - [CHANGELOG](CHANGELOG.md) — What we did ← relative to current file
->   🤖
-
-# In engine/docs/ROADMAP.md (adjusted paths):
-
 > 🤖
->
-> - [CHANGELOG](CHANGELOG.md) — What we did ← relative to current file
->   🤖
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'fontSize':'14px'}}}%%
+graph LR
+    ... (roadmap diagram from ROADMAP.md)
 ```
+
+# In engine/docs/CHANGELOG.md (at TOP after title):
+
+# Librarian MCP - Changelog
+
+> 🤖
+>
+> - [README](../../README.md) - Our project
+> - [CHANGELOG](CHANGELOG.md) — What we did ← adjusted paths
+> - [ROADMAP](ROADMAP.md) — What we wanna do
+> - etc...
+>
+> 🤖
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'fontSize':'14px'}}}%%
+graph LR
+    ... (SAME roadmap diagram)
+```
+
+## v1.0.0
+
+... content ...
+
+# In engine/docs/ROADMAP.md (at TOP after title):
+
+# Librarian MCP - Roadmap
+
+> 🤖
+>
+> - [README](../../README.md) - Our project ← adjusted paths
+> - etc...
+>
+> 🤖
+
+```mermaid
+... (source diagram)
+```
+
+## v0.5.1
+
+... content ...
+````
 
 **Path adjustment rules:**
 
 - Same directory → Use filename only: `CHANGELOG.md`
-- Parent directory → Use `../path`
+- Parent directory → Use `../path` or `../../path`
 - Child directory → Use `subdir/file.md`
 - Keep description text identical across all files
+- **Always copy the EXACT same mermaid diagram from ROADMAP.md**
+- **README keeps mermaid at END, all others at TOP**
 
 ---
 

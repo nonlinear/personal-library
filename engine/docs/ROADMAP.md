@@ -1,91 +1,58 @@
 # Librarian MCP - Roadmap
 
+> 🤖
+>
+> - [README](../../README.md) - Our project
+> - [CHANGELOG](CHANGELOG.md) — What we did
+> - [ROADMAP](ROADMAP.md) — What we wanna do
+> - [CONTRIBUTING](CONTRIBUTING.md) — How we do it
+> - [CHECKS](CHECKS.md) — What we accept
+> - 👷 Wanna collaborate? Connect via [signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8)
+>
+> 🤖
+
 ```mermaid
 %%{init: {'theme':'base', 'themeVariables': { 'fontSize':'14px'}}}%%
 graph LR
-    subgraph "🚀 Active"
+    subgraph "✅ Done"
         V1[v1.0.0<br/>Renaming<br/><small>Personal Library → Librarian</small>]
     end
 
     subgraph "🎯 Ready"
-        V5B[v0.5.1<br/>Hygiene]
-        V5C[v0.5.2<br/>User Testing]
+        V11[v1.1.0<br/>Hygiene]
+        V12[v1.2.0<br/>User Testing]
     end
 
     subgraph "⏳ Blocked/Waiting"
-        V7[v0.7.0<br/>Citation Expression<br/><small>VS Code limitation</small>]
-        V6[v0.6.0<br/>Better Feedback]
+        V14[v1.4.0<br/>Citation Expression<br/><small>VS Code limitation</small>]
+        V13[v1.3.0<br/>Better Feedback]
     end
 
     subgraph "📅 Future"
-        V8[v0.8.0<br/>FAILED→REPORT]
-        V9[v0.9.0<br/>Error Handling]
-        V10[v0.10.0<br/>Multi-User]
-        ADMIN[v2.0.0<br/>Admin Generalization<br/><small>Status files repo</small>]
+        V15[v1.5.0<br/>FAILED→REPORT]
+        V16[v1.6.0<br/>Error Handling]
+        V17[v1.7.0<br/>Multi-User]
+        V2[v2.0.0<br/>Admin Generalization<br/><small>Status files repo</small>]
     end
 
-    V1 --> V5B
-    V1 --> V5C
-    V5B --> V6
-    V5C --> V6
-    V6 --> V7
-    V7 --> V8
-    V8 --> V9
-    V9 --> V10
-    V10 --> ADMIN
+    V1 --> V11
+    V1 --> V12
+    V11 --> V13
+    V12 --> V13
+    V13 --> V14
+    V14 --> V15
+    V15 --> V16
+    V16 --> V17
+    V17 --> V2
 
     style V1 fill:#90EE90
-    style V6 fill:#FFE4B5
-    style ADMIN fill:#E6E6FA
+    style V13 fill:#FFE4B5
+    style V2 fill:#E6E6FA
 ```
 
 ---
 
-## v1.0.0 - Renaming: Personal Library → Librarian 🚀
-
-**Status:** 🚧 In Progress (on main - no branch)
-
-**Goal:** Complete rebranding from "Personal Library" to "Librarian" across entire project.
-
-### Phase 1: Documentation & Code ✅ COMPLETE
-
-- [x] Rename all docs (README, CHANGELOG, ROADMAP, CHECKS, mcp-setup)
-- [x] Rename all scripts (mcp_server.py, indexer_v2.py, watch_library.py)
-- [x] Update MCP server identifier: `personal-library` → `librarian`
-- [x] Push to GitHub
-
-### Phase 2: Infrastructure (In Progress)
-
-- [ ] Rename local folder: `personal library` → `librarian`
-- [ ] Update library_path in library-index.json
-- [ ] Update all hardcoded paths in scripts
-- [ ] Test all scripts with new paths
-- [ ] Commit path updates
-
-### Phase 3: GitHub Repository
-
-- [ ] Rename GitHub repo: `personal-library` → `librarian`
-- [ ] Update remote URL in local git config
-- [ ] Update all documentation links to new repo URL
-- [ ] Test clone/pull from new URL
-
-### Phase 4: Version Renumbering
-
-After v1.0.0 is complete, renumber all versions:
-- v0.5.0 → v1.1.0 (Smart Indexing epic)
-- v0.5.1 → v1.1.1 (if exists)
-- v0.4.0 → v1.0.0 (initial stable release)
-- All future versions follow semantic versioning from v1.1.x onwards
-
-**Why v1.0.0 for renaming?**
-Major version bump signals breaking change:
-- BREAKING: MCP config must update `personal-library` → `librarian`
-- BREAKING: Folder paths changed
-- BREAKING: GitHub repo URL changed
-
----
-
-## v0.5.1
+## v1.1.0
 
 ### Hygiene
 
@@ -102,9 +69,7 @@ Repository structure and code hygiene improvements for long-term maintainability
 - [ ] Add stability check for hidden object files
       🗒️ Previous attempts failed due to path/test breakage—requires careful, coordinated update.
 
-## v0.5.0
-
-## v0.5.2
+## v1.2.0
 
 ### User testing
 
@@ -115,7 +80,7 @@ Test repo from the start, change docs or setup to comply.
 - [ ] Add setup scripts/checks for new users
 - [ ] Collect feedback from first-time users
 
-## v0.6.0
+## v1.3.0
 
 ### Better feedback loop
 
@@ -130,7 +95,7 @@ Improve feedback and interaction for users and contributors (includes VS Code Ex
 - [ ] Support direct book queries
 - [ ] Extension configuration
 
-## v0.7.0
+## v1.4.0
 
 ### Source Granularity (Deferred from v0.4.0)
 
@@ -152,7 +117,7 @@ Improve feedback and interaction for users and contributors (includes VS Code Ex
 
 🗒️ Requires VS Code team response or custom extension development
 
-## v0.8.0
+## v1.5.0
 
 ### FAILED to REPORT
 
@@ -170,7 +135,7 @@ Visibility into indexing health and automatic detection of problems
 - [ ] Store metrics in metadata.json
       **Current issue:** Only ~0.7 chunks/book (137 chunks from 197 books). Expected: 100+ chunks/book.
 
-## v0.9.0
+## v1.6.0
 
 ### Granular Error Handling
 
@@ -187,7 +152,7 @@ Implement granular error reporting for MCP research pipeline
 - [ ] On "success but empty" (no results for topic/book), clearly inform user and suggest similar concepts or related topics/books as follow-up
 - [ ] Document all error types and user-facing messages
 
-## v0.10.0
+## v1.7.0
 
 ### Multi-User Support
 
@@ -195,7 +160,7 @@ Add support for multi-user environments (permissions, access control)
 
 - [ ] Permission/access error handling
 
-## v1.0.0
+## v2.0.0
 
 ### Admin Generalization
 
@@ -267,7 +232,7 @@ Add support for multi-user environments (permissions, access control)
 
 🗒️ This IS the meta-workflow becoming a product
 
-## v0.11.0
+## v1.8.0
 
 ### Future Ideas
 
@@ -325,13 +290,3 @@ Enhancements for later versions
   - [ ] Format: `viewer://file=path&search=query`
   - [ ] One-click navigation from citations to exact location in book
   - [ ] Integration with MCP response format
-    > 🤖
-    >
-    > - [README](./README.md) - Our project
-    > - [CHANGELOG](./engine/docs/CHANGELOG.md) — What we did
-    > - [ROADMAP](./engine/docs/ROADMAP.md) — What we wanna do
-    > - [CONTRIBUTING](./engine/docs/CONTRIBUTING.md) — How we do it
-    > - [CHECKS](./engine/docs/CHECKS.md) — What we accept
-    > - [/whatsup](./.github/prompts/whatsup.prompt.md) — The prompt that keeps us sane
-    >
-    > 🤖

@@ -19,12 +19,6 @@
 
 ---
 
-- **✅ Done** / [Epic-per-branch workflow](engine/docs/CHANGELOG.md#v0.3.1) / _Branch-based development for each roadmap epic_
-- **🚧 Next** / [Delta indexing](engine/docs/ROADMAP.md#v0.4.0) / _More optimized reindexing_
-- [ROADMAP](engine/docs/ROADMAP.md) / [CHANGELOG](engine/docs/CHANGELOG.md)
-
----
-
 ## Installation
 
 1. **Clone this repo**
@@ -130,7 +124,6 @@ Librarian MCP is **provider-agnostic**. Use your favorite AI provider:
 | **LM Studio**      | 👷 Pending                                                                                                                                                           |
 | **OpenWebUI**      | 👷 Pending                                                                                                                                                           |
 
-> 👷 Wanna collaborate? Connect via [Personal Library signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8) -->
 
 > 🤖
 >
@@ -139,6 +132,49 @@ Librarian MCP is **provider-agnostic**. Use your favorite AI provider:
 > - [ROADMAP](./engine/docs/ROADMAP.md) — What we wanna do
 > - [CONTRIBUTING](./engine/docs/CONTRIBUTING.md) — How we do it
 > - [CHECKS](./engine/docs/CHECKS.md) — What we accept
-> - [/whatsup](./.github/prompts/whatsup.prompt.md) — The prompt that keeps us sane
+> - Wanna collaborate? Connect via [signal](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8)
 >
 > 🤖
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'fontSize':'14px'}}}%%
+graph LR
+    subgraph "✅ Done"
+        V1[v1.0.0<br/>Renaming<br/><small>Personal Library → Librarian</small>]
+    end
+
+    subgraph "🎯 Ready"
+        V11[v1.1.0<br/>Hygiene]
+        V12[v1.2.0<br/>User Testing]
+    end
+
+    subgraph "⏳ Blocked/Waiting"
+        V14[v1.4.0<br/>Citation Expression<br/><small>VS Code limitation</small>]
+        V13[v1.3.0<br/>Better Feedback]
+    end
+
+    subgraph "📅 Future"
+        V15[v1.5.0<br/>FAILED→REPORT]
+        V16[v1.6.0<br/>Error Handling]
+        V17[v1.7.0<br/>Multi-User]
+        V2[v2.0.0<br/>Admin Generalization<br/><small>Status files repo</small>]
+    end
+
+    V1 --> V11
+
+    V1 --> V12
+    V11 --> V13
+    V12 --> V13
+    V13 --> V14
+    V14 --> V15
+    V15 --> V16
+    V16 --> V17
+    V17 --> V2
+
+    style V1 fill:#90EE90
+    style V13 fill:#FFE4B5
+    style V2 fill:#E6E6FA
+
+```
+
+```
