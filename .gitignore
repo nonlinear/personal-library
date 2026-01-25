@@ -2,11 +2,8 @@
 # Most patterns moved to .git/info/exclude per gaps/gitignore-vs-autocomplete.md
 # Only shared metadata/indices here to avoid autocomplete blocking
 
-# Books metadata/indices (books themselves in .git/info/exclude)
-books/**/*.pkl
-books/**/*.index
-books/**/*.json
-books/**/*.faiss
+# Books folder - ignore everything inside
+books/**
 
 # Failed books log (contains PII)
 engine/docs/FAILED.md
