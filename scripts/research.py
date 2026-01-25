@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CLI wrapper for Personal Library partitioned storage.
+CLI wrapper for Librarian partitioned storage.
 Called by VS Code extension - returns JSON results.
 """
 import sys

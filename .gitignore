@@ -40,3 +40,8 @@ __pycache__/
 indexed_books.json
 indexed_books.txt
 query_result.txt
+
+# Books (binary files)
+books/**/*.pdf
+books/**/*.epub
+books/**/*.txt

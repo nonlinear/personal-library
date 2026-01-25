@@ -239,7 +239,7 @@ def save_index(index: faiss.Index, docstore: Dict):
 
 def main():
     """Main indexing workflow."""
-    print("🔨 Personal Library MCP - Indexer")
+    print("🔨 Librarian MCP - Indexer")
     print("=" * 50)
 
     # Load metadata

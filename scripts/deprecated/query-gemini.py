@@ -89,7 +89,7 @@ def main():
 
     question = " ".join(sys.argv[1:])
 
-    print("\n🔍 Personal Library Query")
+    print("\n🔍 Librarian Query")
     print("=" * 60)
 
     query_library(question)
