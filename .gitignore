@@ -6,6 +6,17 @@
 books/*
 !books/.gitkeep
 
+# GitHub configs - only allow specific prompts
+.github/chatmodes/**
+.github/scripts/**
+.github/prompts/*
+!.github/prompts/research*
+!.github/prompts/whatsup*
+!.github/prompts/wrap-it-up*
+
+# VS Code settings - ignore all
+.vscode/**
+
 # Failed books log (contains PII)
 engine/docs/FAILED.md
 
