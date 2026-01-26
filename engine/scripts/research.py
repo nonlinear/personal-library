@@ -15,16 +15,16 @@ import os
 
 # Paths
 SCRIPT_DIR = Path(__file__).parent
-PROJECT_DIR = SCRIPT_DIR.parent
+PROJECT_DIR = SCRIPT_DIR.parent.parent  # engine/scripts/ -> engine/ -> project root
 BOOKS_DIR = PROJECT_DIR / "books"
-MODELS_DIR = PROJECT_DIR / "models"
+MODELS_DIR = SCRIPT_DIR.parent / "models"  # engine/models/
 METADATA_FILE = BOOKS_DIR / "library-index.json"
 
 # Set model cache to local engine/models/ directory
 os.environ['SENTENCE_TRANSFORMERS_HOME'] = str(MODELS_DIR)
 
 # Load local embedding model (384-dim)
-EMBEDDING_MODEL = SentenceTransformer('all-MiniLM-L6-v2')
+EMBEDDING_MODEL = SentenceTransformer('BAAI/bge-small-en-v1.5')
 
 def load_metadata():
     with open(METADATA_FILE, 'r', encoding='utf-8') as f:

@@ -48,7 +48,7 @@ MODELS_DIR = Path(__file__).parent.parent / "models"
 # Available models
 EMBEDDING_MODELS = {
     "minilm": {
-        "name": "sentence-transformers/all-MiniLM-L6-v2",
+        "name": "BAAI/bge-small-en-v1.5",
         "dim": 384,
         "desc": "Fast, lightweight (90MB)"
     },

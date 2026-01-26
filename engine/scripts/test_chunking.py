@@ -14,7 +14,7 @@ TEST_TOPIC = "cybersecurity/applied"
 BOOKS_DIR = Path(__file__).parent.parent / "books" / TEST_TOPIC
 
 embed_model = HuggingFaceEmbedding(
-    model_name="sentence-transformers/all-MiniLM-L6-v2",
+    model_name="BAAI/bge-small-en-v1.5",
     cache_folder=str(MODELS_DIR)
 )
 Settings.embed_model = embed_model

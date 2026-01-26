@@ -86,12 +86,12 @@ echo ""
 
 # Download local embedding model
 echo "📥 Downloading local embedding model..."
-echo "   Model: sentence-transformers/all-MiniLM-L6-v2 (~90MB)"
+echo "   Model: BAAI/bge-small-en-v1.5 (~130MB)"
 echo "   Location: engine/models/ (in project)"
 echo ""
 
-mkdir -p models
-$PYTHON -c "import os; os.environ['SENTENCE_TRANSFORMERS_HOME'] = 'models'; from sentence_transformers import SentenceTransformer; model = SentenceTransformer('all-MiniLM-L6-v2'); print('✅ Model downloaded to engine/models/')"
+mkdir -p engine/models
+$PYTHON -c "import os; os.environ['SENTENCE_TRANSFORMERS_HOME'] = 'engine/models'; from sentence_transformers import SentenceTransformer; model = SentenceTransformer('BAAI/bge-small-en-v1.5'); print('✅ Model downloaded to engine/models/')"
 
 echo ""
 echo ""

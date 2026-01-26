@@ -27,7 +27,7 @@ import os
 os.environ['SENTENCE_TRANSFORMERS_HOME'] = str(MODELS_DIR)
 
 print("Loading MiniLM model...")
-model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+model = SentenceTransformer('BAAI/bge-small-en-v1.5')
 print(f"✅ Model loaded (dim: {model.get_sentence_embedding_dimension()})\n")
 
 # Load metadata

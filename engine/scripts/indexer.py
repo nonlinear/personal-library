@@ -140,7 +140,7 @@ print(f"   Structure: topic-partitioned (lazy-loading ready)")
 
 # Save failed books log as markdown
 if failed_books:
-    failed_md = Path(__file__).parent.parent / "engine" / "docs" / "FAILED.md"
+    failed_md = Path(__file__).parent.parent / "MGMT" / "FAILED.md"
     failed_md.parent.mkdir(parents=True, exist_ok=True)
 
     # Group by topic

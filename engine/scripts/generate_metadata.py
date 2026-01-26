@@ -22,15 +22,15 @@ import re
 
 # Paths
 BOOKS_DIR = Path(__file__).parent.parent / "books"
-METADATA_FILE = BOOKS_DIR / "metadata.json"
-FAILED_FILE = Path(__file__).parent.parent / "engine" / "docs" / "FAILED.md"
+METADATA_FILE = BOOKS_DIR / "library-index.json"
+FAILED_FILE = Path(__file__).parent.parent / "MGMT" / "FAILED.md"
 
 # Track failed books (reset on each run)
 FAILED_BOOKS = []
 
 # Tag extraction model (KeyBERT with MiniLM backend)
 print("Loading KeyBERT model...")
-kw_model = KeyBERT('all-MiniLM-L6-v2')
+kw_model = KeyBERT('BAAI/bge-small-en-v1.5')
 print("✅ Model loaded")
 
 

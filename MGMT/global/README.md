@@ -52,6 +52,30 @@ Instead, polycentric governance recognizes:
 - Your discoveries in `gaps/` inform future MGMT updates
 - Community learns from each other's implementations
 
+### Precedence Rules (When Global and Project Conflict)
+
+**Project ALWAYS wins over global.**
+
+When the same rule exists in both:
+
+- `MGMT/global/POLICY.md` (default workflow)
+- `MGMT/POLICY.md` (project-specific)
+
+**→ Use the project version.**
+
+Think of global as **defaults**, project as **overrides**:
+
+- Global: "All epics require tests"
+- Project: "Epics marked [skip-tests] exempt"
+- **Result:** Project rule applies
+
+**For AI assistants:**
+
+1. Read global files first (understand defaults)
+2. Read project files second (learn overrides)
+3. Follow project rules when executing
+4. Cite which level when explaining ("per project POLICY" vs "per global POLICY")
+
 ### Why This Matters for AI-Assisted Development
 
 Traditional project management assumes **one source of truth** controlled top-down. AI collaboration requires **distributed authority**:
