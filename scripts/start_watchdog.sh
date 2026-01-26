@@ -3,8 +3,11 @@
 
 cd /Users/nfrota/Documents/librarian
 
-echo "🚀 Starting Librarian Watchdog at $(date)" >> watchdog.log
-echo "===========================================" >> watchdog.log
+# Create logs directory if it doesn't exist
+mkdir -p engine/logs
+
+echo "🚀 Starting Librarian Watchdog at $(date)" >> engine/logs/watchdog.log
+echo "===========================================" >> engine/logs/watchdog.log
 
 # -u forces unbuffered output so logs appear immediately
-/opt/homebrew/bin/python3.11 -u scripts/watch_library.py >> watchdog.log 2>&1
+/opt/homebrew/bin/python3.11 -u scripts/watch_library.py >> engine/logs/watchdog.log 2>> engine/logs/watchdog.error.log
