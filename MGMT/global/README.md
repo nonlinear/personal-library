@@ -37,7 +37,7 @@ Instead, polycentric governance recognizes:
 **Overlapping concerns:**
 
 - Epic format lives in `global/POLICY.md` (universal)
-- Your epic *content* lives in `ROADMAP.md` (project-specific)
+- Your epic _content_ lives in `ROADMAP.md` (project-specific)
 - Project `POLICY.md` can **extend** global rules (e.g., "requires reindexing?" for database projects)
 
 **Self-organized correction:**
@@ -79,7 +79,25 @@ Ostrom showed that commons (shared resources) thrive under polycentric governanc
 
 **Example:** Epic format syntax lives in global/POLICY.md, but Librarian's "requires reindexing?" column lives in project POLICY.md. Both valid simultaneously.
 
-**Further reading:** Elinor Ostrom - "Governing the Commons", Vincent Ostrom - "The Meaning of Federalism"
+---
+
+### Further Reading
+
+**Elinor Ostrom:**
+
+- [Governing the Commons (1990)](https://wtf.tw/ref/ostrom_1990.pdf) - Foundational work on polycentric governance of common-pool resources
+- [Beyond Markets and States: Polycentric Governance of Complex Economic Systems (2009)](https://www.nobelprize.org/prizes/economic-sciences/2009/ostrom/lecture/) - Nobel Prize lecture explaining polycentricity
+- [Understanding Institutional Diversity (2005)](https://press.princeton.edu/books/paperback/9780691122380/understanding-institutional-diversity) - Framework for analyzing institutions
+
+**Vincent Ostrom:**
+
+- [The Meaning of American Federalism (1991)](https://ics.press/books/meaning-of-american-federalism/) - How federalism creates polycentric order
+- [The Political Theory of a Compound Republic (1987)](https://www.google.com/books/edition/The_Political_Theory_of_a_Compound_Repub/4r8bAAAAQBAJ) - Foundations of polycentric political systems
+
+**Accessible Overview:**
+
+- [Polycentric Governance (Ostrom Workshop)](https://ostromworkshop.indiana.edu/research/polycentric-governance.html) - Indiana University research center named after the Ostroms
+- [Wikipedia: Elinor Ostrom](https://en.wikipedia.org/wiki/Elinor_Ostrom) - Overview of her work and Nobel Prize
 
 ---
 
