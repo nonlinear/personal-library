@@ -14,51 +14,6 @@ This file contains **universal, project-agnostic** workflow rules and convention
 
 ---
 
-## 🤖 Navigation Block Standard
-
-**Every status file MUST have a navigation block** starting and ending with `> 🤖`.
-
-**Syntax (defined here in global/POLICY.md):**
-
-```markdown
-> 🤖
->
-> - [README](path/to/README.md) - Our project
-> - [CHANGELOG](path/to/CHANGELOG.md) — What we did
-> - [ROADMAP](path/to/ROADMAP.md) — What we wanna do
-> - [POLICY](path/to/POLICY.md) [project](path) / [global](path) — How we do it
-> - [CHECKS](path/to/CHECKS.md) — What we accept
-> - [/MGMT-start](path/to/MGMT-start.prompt.md) — Pre-commit validation
-> - [/MGMT-end](path/to/MGMT-end.prompt.md) — Session wrap-up
-> - [Project-specific links]
->
-> 🤖
-```
-
-**Required links (all projects):**
-
-- README, CHANGELOG, ROADMAP, POLICY (project + global), CHECKS
-- /MGMT-start and /MGMT-end prompts
-
-**Optional links:**
-
-- Project-specific collaboration channels
-- Additional project documentation
-
-**Path adjustment:**
-
-- Use relative paths from each file's location
-- Same directory → `CHANGELOG.md`
-- Parent → `../README.md` or `../../README.md`
-- Child → `subdir/file.md`
-
-**Placement:**
-
-- **README.md:** At END (before mermaid roadmap)
-- **All other status files:** At TOP (after title, before mermaid)
-
----
-
 ## Formatting Standard
 
 All status files (CHECKS, ROADMAP, CHANGELOG, POLICY) must be both **human-readable** (clear, prompt-like, easy to follow) and **machine-readable** (easy for scripts or AI to parse and execute).
