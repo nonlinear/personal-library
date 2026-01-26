@@ -7,6 +7,8 @@
 > - [ROADMAP](ROADMAP.md) — What we wanna do
 > - [POLICY](POLICY.md) [project](POLICY.md) / [global](global/POLICY.md) — How we do it
 > - [CHECKS](CHECKS.md) — What we accept
+> - [/MGMT-start](../.github/prompts/MGMT-start.prompt.md) — Pre-commit validation
+> - [/MGMT-end](../.github/prompts/MGMT-end.prompt.md) — Session wrap-up
 > - 👷 Wanna collaborate? Connect via [signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8)
 >
 > 🤖
@@ -52,9 +54,11 @@ graph LR
 
 ---
 
-## Universal Workflow
+## Purpose
 
-**This project follows the [global MGMT policy](global/POLICY.md)** for:
+**This file contains Librarian-specific workflow rules and deviations.**
+
+**For universal MGMT rules:** See [global/POLICY.md](global/POLICY.md) for:
 
 - Epic/branch workflow ("Epic Dance")
 - Semantic versioning
@@ -62,8 +66,13 @@ graph LR
 - Commit messages
 - Rebase vs merge rules
 - Pre-commit workflow
+- Navigation block syntax
 
-**This file contains only Librarian-specific rules and deviations.**
+**Project vs Global:**
+
+- **Global** (`MGMT/global/POLICY.md`): Universal rules for ANY project using MGMT
+- **Project** (`MGMT/POLICY.md`): Librarian-specific rules that extend/override global
+- **Precedence:** Project rules WIN when conflict exists
 
 ---
 

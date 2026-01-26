@@ -7,9 +7,15 @@
 > - [ROADMAP](ROADMAP.md) — What we wanna do
 > - [POLICY](POLICY.md) [project](POLICY.md) / [global](global/POLICY.md) — How we do it
 > - [CHECKS](CHECKS.md) — What we accept
+> - [/MGMT-start](../.github/prompts/MGMT-start.prompt.md) — Pre-commit validation
+> - [/MGMT-end](../.github/prompts/MGMT-end.prompt.md) — Session wrap-up
 > - 👷 Wanna collaborate? Connect via [signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8)
 >
 > 🤖
+
+**This file contains Librarian-specific stability checks.**
+
+**For universal MGMT validation:** See [global/CHECKS.md](global/CHECKS.md)
 
 ```mermaid
 %%{init: {'theme':'base', 'themeVariables': { 'fontSize':'14px'}}}%%
@@ -49,29 +55,6 @@ graph LR
     style V13 fill:#FFE4B5
     style V2 fill:#E6E6FA
 ```
-
-> **Formatting Standard:**
->
-> All status files (CHECKS, ROADMAP, CHANGELOG, CONTRIBUTING) must be both **human-readable** (clear, prompt-like, easy to follow) and **machine-readable** (easy for scripts or AI to parse and execute).
->
-> **How to format tests and checklists:**
->
-> 1. **Each test/check should be a short, copy-pasteable code block** (one-liner or small block), with a plain-text explanation and pass/fail criteria immediately after.
-> 2. **No large, monolithic scripts**—keep each check atomic and self-contained.
-> 3. **No markdown formatting or prose inside code blocks.**
-> 4. **All explanations, expected output, and pass criteria must be outside code blocks.**
-> 5. **Status files should be easy for both humans and automation to read, extract, and run.**
->
-> _Example:_
->
-> ```bash
-> python3.11 -c "import llama_index.core; import sentence_transformers"
-> ```
->
-> Expected: No error, prints nothing.
-> Pass: ✅ Dependencies OK
-
-> **Definition of Done:** Tests required before pushing to production
 
 ---
 
@@ -147,35 +130,13 @@ grep -q 'Formatting Standard' MGMT/CHECKS.md && \
 grep -q 'Formatting Standard' MGMT/ROADMAP.md && \
 grep -q 'Formatting Standard' MGMT/CHECKS.md && echo '✅ Formatting standard declared in CHECKS.md' || echo '❌ Formatting standard missing in CHECKS.md'
 Expected: Prints '✅ All status files declare formatting standard'.
-Pass: ✅ All status files declare formatting standard
-
-**Test: Formatting compliance (manual/AI review)**
-For each status file, confirm:
-
-- Each test/check is a short, copy-pasteable code block with plain-text explanation and pass/fail criteria immediately after.
-- No large, monolithic scripts; each check is atomic and self-contained.
-- No markdown formatting or prose inside code blocks.
-- All explanations, expected output, and pass criteria are outside code blocks.
-- File is easy for both humans and automation to read, extract, and run.
-
-Pass: ✅ All status files are both human- and machine-readable
-
 ---
 
-echo "🔍 Running stability checks..."
-echo ""
-echo "0️⃣ Status file formatting check..."
-grep -q 'Formatting Standard' MGMT/CHECKS.md && \
-grep -q 'Formatting Standard' MGMT/ROADMAP.md && \
-grep -q 'Formatting Standard' MGMT/CHECKS.md && echo '✅ Formatting standard declared in CHECKS.md' || echo '❌ Formatting standard missing in CHECKS.md'
-echo "2️⃣ Dependencies test..."
-echo "3️⃣ File structure test (v2.0)..."
-test -f books/.library-index.json && ls books/*/.topic-index.json >/dev/null 2>&1 && echo "✅ v2.0 Files exist" || echo "❌ Files missing"
-echo "4️⃣ Nested folder test..."
-echo ""
-echo "✅ All checks complete. Review results above."
+## 📋 Automated Test Sequence
 
-**Automated test sequence (run each check below):**
+**For universal MGMT checks (formatting, navigation blocks, etc.):** See [global/CHECKS.md](global/CHECKS.md)
+
+**The following are Librarian-specific stability checks:**
 
 ---
 

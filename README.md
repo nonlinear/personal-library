@@ -124,6 +124,8 @@ Librarian MCP is **provider-agnostic**. Use your favorite AI provider:
 > - [ROADMAP](./MGMT/ROADMAP.md) — What we wanna do
 > - [POLICY](./MGMT/POLICY.md) [project](./MGMT/POLICY.md) / [global](./MGMT/global/POLICY.md) — How we do it
 > - [CHECKS](./MGMT/CHECKS.md) — What we accept
+> - [/MGMT-start](.github/prompts/MGMT-start.prompt.md) — Pre-commit validation
+> - [/MGMT-end](.github/prompts/MGMT-end.prompt.md) — Session wrap-up
 > - Wanna collaborate? Connect via [signal](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8)
 >
 > 🤖

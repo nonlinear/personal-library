@@ -7,6 +7,8 @@
 > - [ROADMAP](ROADMAP.md) — What we wanna do
 > - [POLICY](POLICY.md) [project](POLICY.md) / [global](global/POLICY.md) — How we do it
 > - [CHECKS](CHECKS.md) — What we accept
+> - [/MGMT-start](../.github/prompts/MGMT-start.prompt.md) — Pre-commit validation
+> - [/MGMT-end](../.github/prompts/MGMT-end.prompt.md) — Session wrap-up
 > - 👷 Wanna collaborate? Connect via [signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8)
 >
 > 🤖
