@@ -75,7 +75,7 @@ Repository structure improvements and status files system generalization. Combin
 - [x] Rename existing db files to hidden
 - [x] Update .gitignore to track hidden files
 - [x] Test on macOS (research.py works correctly)
-- [ ] Update CHECKS.md for new filenames
+- [x] Update CHECKS.md for new filenames
 
 **Part 3: Repository Cleanup (DONE)**
 
