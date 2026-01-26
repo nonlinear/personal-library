@@ -72,7 +72,7 @@ Make sure to **specify topic or book** in your question. MCP will try to disambi
 
 **Example 3**: "`/research` what tarot spreads work best for decision-making under uncertainty?"
 
-**Troubleshooting:** Books that failed to index (corrupted files, unsupported formats) go silently to `engine/docs/FAILED.md`
+**Troubleshooting:** Books that failed to index (corrupted files, unsupported formats) go silently to `MGMT/FAILED.md`
 
 > 👉 Without `/research` your AI uses general knowledge. With it you get precise citations from your library
 
@@ -110,7 +110,7 @@ Librarian MCP is **provider-agnostic**. Use your favorite AI provider:
 
 | AI Provider        | Status                                                                                                                                                        |
 | :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Terminal**       | ✅ `python3.11 engine/scripts/research.py "your question" --topic ai`                                                                                                |
+| **Terminal**       | ✅ `python3.11 engine/scripts/research.py "your question" --topic ai`                                                                                         |
 | **VS Code**        | ✅ `bash   code --install-extension https://github.com/nonlinear/librarian/raw/main/.vscode/extensions/personal-library-mcp/personal-library-mcp-latest.vsix` |
 | **Claude Desktop** | 👷 Pending                                                                                                                                                    |
 | **OpenAI API**     | 👷 Pending                                                                                                                                                    |

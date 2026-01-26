@@ -87,7 +87,7 @@ Repository structure improvements and status files system generalization. Combin
 - [x] Update README installation instructions
 - [x] Test all scripts work with new paths
 - [x] Delete legacy log files from root
-- [ ] Remove old engine/docs/ folder (duplicate of MGMT/)
+- [x] Remove old engine/docs/ folder (duplicate of MGMT/)
 
 ## v1.2.0
 
@@ -144,7 +144,7 @@ Improve feedback and interaction for users and contributors (includes VS Code Ex
 Visibility into indexing health and automatic detection of problems
 
 - [ ] Track timing metrics (total time, time per book, chunks per second)
-- [ ] Generate `engine/docs/REPORT.md` after each indexing run
+- [ ] Generate `MGMT/REPORT.md` after each indexing run
 - [ ] **✅ Success section:** Topics indexed successfully with stats
 - [ ] **⚠️ Alert section:** Suspicious chunking (health check failures)
 - [ ] **❌ Error section:** Books that failed to index
