@@ -8,6 +8,25 @@
 
 ---
 
+## Philosophy: Polycentric Governance
+
+**Inspired by Elinor Ostrom's work on commons management.**
+
+MGMT uses a **polycentric structure**—not hierarchical "levels" but **overlapping jurisdictions** where global and project concerns coexist.
+
+**Key principles:**
+
+1. **Multiple centers of power:** Global MGMT defines framework, projects adapt to context
+2. **Overlapping not separate:** Project POLICY.md **extends** (not replaces) global/POLICY.md
+3. **Self-organized correction:** When MGMT updates, projects decide whether/when to adopt
+4. **No top-down mandates:** Global provides patterns, projects choose implementations
+
+**Example:** Epic format syntax lives in global/POLICY.md, but Librarian's "requires reindexing?" column lives in project POLICY.md. Both valid simultaneously.
+
+**Why this matters:** Like Ostrom's federalism, MGMT allows "people to function through self-governing institutions among local, regional, and national communities" (Vincent Ostrom)—your project is a self-governing unit that imports shared infrastructure.
+
+---
+
 ## What is MGMT?
 
 A meta-documentation system that provides:

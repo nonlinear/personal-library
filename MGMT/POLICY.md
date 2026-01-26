@@ -50,53 +50,93 @@ graph LR
     style V2 fill:#E6E6FA
 ```
 
-# **Formatting Standard:**
+---
 
-#
+## Universal Workflow
 
-# All status files (CHECKS, ROADMAP, CHANGELOG, POLICY) must be both **human-readable** (clear, prompt-like, easy to follow) and **machine-readable** (easy for scripts or AI to parse and execute).
+**This project follows the [global MGMT policy](global/POLICY.md)** for:
 
-#
+- Epic/branch workflow ("Epic Dance")
+- Semantic versioning
+- Branch strategy
+- Commit messages
+- Rebase vs merge rules
+- Pre-commit workflow
 
-# **How to format tests and checklists:**
+**This file contains only Librarian-specific rules and deviations.**
 
-#
-
-# 1. **Each test/check should be a short, copy-pasteable code block** (one-liner or small block), with a plain-text explanation and pass/fail criteria immediately after.
-
-# 2. **No large, monolithic scripts**—keep each check atomic and self-contained.
-
-# 3. **No markdown formatting or prose inside code blocks.**
-
-# 4. **All explanations, expected output, and pass criteria must be outside code blocks.**
-
-# 5. **Status files should be easy for both humans and automation to read, extract, and run.**
-
-#
-
-# _Example:_
-
-#
-
-# ```bash
-
-# python3.11 -c "import llama_index.core; import sentence_transformers"
-
-# ```
-
-#
-
-# Expected: No error, prints nothing.
-
-# Pass: ✅ Dependencies OK
-
-## Epic Creation & Grooming Rules
-
-- If two features can be delivered separately, create separate epics.
+---
 
 ## 🚨 About This Project
 
 **This is a personal library management system - NOT a collaborative repository.**
+
+Each person runs their own instance with their own books. Nothing syncs to GitHub except code/scripts.
+
+**Want to contribute code?** Contact me first to discuss environment setup - don't submit PRs directly.
+
+**Just want to use it?** Fork it, clone it, use it. Your books/data stay 100% local.
+
+### Setup After Clone
+
+**1. Verify `.git/info/exclude` exists:**
+
+```bash
+cat .git/info/exclude
+```
+
+Expected content:
+
+```
+# BYOB: Bring Your Own Books/Models - Local files (don't sync to GitHub)
+books/**/*.epub
+books/**/*.pkl
+books/**/*.index
+books/metadata.json
+models/
+```
+
+**Why:** Keeps your library private + enables autocomplete for book links. See [gaps/epic-notes/v0.4.0.md](gaps/epic-notes/v0.4.0.md#autocomplete-investigation) for technical details.
+
+**2. Add your books:**
+
+```bash
+# Organize books from Downloads
+python3.11 .github/scripts/organize_books.py
+
+# Generate metadata + indices
+python3.11 scripts/indexer.py
+```
+
+---
+
+## Librarian-Specific Versioning
+
+| Type      | Version Change  | Requires Reindex? | Breaking? |
+| --------- | --------------- | ----------------- | --------- |
+| **Patch** | v0.2.0 → v0.2.1 | No                | No        |
+| **Minor** | v0.2.x → v0.3.0 | Optional          | No        |
+| **Major** | v0.x → v1.0     | Yes               | Yes       |
+
+**Reindexing requirement examples:**
+
+- ✅ **Requires reindex:** Schema changes, new embedding models, chunking algorithm changes
+- ❌ **No reindex needed:** UI changes, prompt updates, MCP server improvements
+
+---
+
+## Epic Creation Rules
+
+**If two features can be delivered separately, create separate epics.**
+
+Example:
+- ✅ Good: `v1.1.0: Hidden Files` + `v1.2.0: User Testing` (separate)
+- ❌ Bad: `v1.1.0: Hygiene + Testing + Docs` (monolithic)
+
+---
+
+**Last updated:** 2026-01-26  
+**Version:** 1.1 (Decoupled from global policy)
 
 Each person runs their own instance with their own books. Nothing syncs to GitHub except code/scripts.
 
