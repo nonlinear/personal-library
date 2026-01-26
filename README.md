@@ -127,7 +127,7 @@ Librarian MCP is **provider-agnostic**. Use your favorite AI provider:
 > - [README](./README.md) - Our project
 > - [CHANGELOG](./MGMT/CHANGELOG.md) — What we did
 > - [ROADMAP](./MGMT/ROADMAP.md) — What we wanna do
-> - [POLICY](./MGMT/POLICY.md) [project](./MGMT/POLICY.md) / [global](./MGMT/POLICY-global.md) — How we do it
+> - [POLICY](./MGMT/POLICY.md) [project](./MGMT/POLICY.md) / [global](./MGMT/global/POLICY.md) — How we do it
 > - [CHECKS](./MGMT/CHECKS.md) — What we accept
 > - Wanna collaborate? Connect via [signal](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8)
 >

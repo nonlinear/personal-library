@@ -5,7 +5,7 @@
 > - [README](../README.md) - Our project
 > - [CHANGELOG](CHANGELOG.md) — What we did
 > - [ROADMAP](ROADMAP.md) — What we wanna do
-> - [POLICY](POLICY.md) [project](POLICY.md) / [global](POLICY-global.md) — How we do it
+> - [POLICY](POLICY.md) [project](POLICY.md) / [global](global/POLICY.md) — How we do it
 > - [CHECKS](CHECKS.md) — What we accept
 > - 👷 Wanna collaborate? Connect via [signal group](https://signal.group/#CjQKIKD7zJjxP9sryI9vE5ATQZVqYsWGN_3yYURA5giGogh3EhAWfvK2Fw_kaFtt-MQ6Jlp8)
 >
@@ -59,8 +59,9 @@ graph LR
 Repository structure improvements and status files system generalization. Combines folder reorganization with MGMT naming/structure.
 
 **Part 1: MGMT System (DONE)**
+
 - [x] Create MGMT/ folder for all meta-documentation
-- [x] Move engine/docs/* → MGMT/
+- [x] Move engine/docs/\* → MGMT/
 - [x] Rename CONTRIBUTING.md → POLICY.md
 - [x] Create POLICY-global.md placeholder
 - [x] Update all navigation blocks
@@ -68,12 +69,14 @@ Repository structure improvements and status files system generalization. Combin
 - [x] Update all references in prompts
 
 **Part 2: Hidden Object Files (TODO)**
+
 - [ ] Update scripts to write/read .chunks.json, .faiss.index (hidden)
 - [ ] Test hidden files on macOS
 - [ ] Add migration helper script
 - [ ] Update CHECKS.md for new filenames
 
 **Part 3: Cleanup (TODO)**
+
 - [ ] Remove old engine/docs/ folder (or keep temporarily)
 - [ ] Test all scripts still work
 - [ ] Update README installation instructions if needed
