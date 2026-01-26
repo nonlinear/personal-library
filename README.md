@@ -135,10 +135,10 @@ Librarian MCP is **provider-agnostic**. Use your favorite AI provider:
 graph LR
     subgraph "✅ Done"
         V1[v1.0.0<br/>Renaming<br/><small>Personal Library → Librarian</small>]
+        V11[v1.1.0<br/>Hygiene]
     end
 
     subgraph "🎯 Ready"
-        V11[v1.1.0<br/>Hygiene]
         V12[v1.2.0<br/>User Testing]
     end
 

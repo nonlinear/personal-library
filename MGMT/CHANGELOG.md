@@ -18,10 +18,10 @@
 graph LR
     subgraph "✅ Done"
         V1[v1.0.0<br/>Renaming<br/><small>Personal Library → Librarian</small>]
+        V11[v1.1.0<br/>Hygiene]
     end
 
     subgraph "🎯 Ready"
-        V11[v1.1.0<br/>Hygiene]
         V12[v1.2.0<br/>User Testing]
     end
 
@@ -51,6 +51,53 @@ graph LR
     style V13 fill:#FFE4B5
     style V2 fill:#E6E6FA
 ```
+
+## v1.1.0
+
+### ✅ Hygiene + MGMT Generalization | [notes](epic-notes/v1.1.0.md)
+
+**Completed:** 2026-01-26
+
+Repository structure improvements and status files system generalization. Combines folder reorganization with MGMT framework naming and polycentric governance model.
+
+**Part 1: MGMT System**
+
+- Created MGMT/ folder for all meta-documentation
+- Moved engine/docs/* → MGMT/
+- Renamed CONTRIBUTING.md → POLICY.md
+- Created global/ subfolder with universal MGMT framework
+- Updated all navigation blocks (🤖 markers in all status files)
+- Renamed prompts (whatsup → MGMT-start, wrap-it-up → MGMT-end)
+- Researched and documented polycentric governance philosophy (Ostrom)
+- Added precedence rules (project overrides global)
+
+**Part 2: Hidden Object Files**
+
+- Updated all scripts to use hidden filenames (.library-index.json, .chunks.json, .faiss.index, .topic-index.json)
+- Renamed existing db files to hidden (macOS compatible)
+- Updated .gitignore to track hidden files
+- Tested on macOS (research.py works correctly)
+- Updated CHECKS.md for new filenames
+
+**Part 3: Repository Cleanup**
+
+- Moved requirements.txt → engine/requirements.txt
+- Moved scripts/ → engine/scripts/
+- Moved models/ → engine/models/
+- Created engine/logs/ for runtime logs
+- Fixed all path references across project
+- Updated README installation instructions
+- Tested all scripts work with new paths
+- Deleted legacy log files from root
+- Removed old engine/docs/ folder (duplicate of MGMT/)
+
+**Impact:** Better separation of concerns, cleaner repository structure, MGMT framework ready for multi-project use
+
+**Migration:** None - backward compatible, existing indexes work
+
+**Commits:** 22 commits between 2026-01-24 and 2026-01-26
+
+---
 
 ## v1.0.0
 
